@@ -1,5 +1,4 @@
 // Catálogo Oficial Pirotecnia Barranquilla 2026
-// Regla de precios: margen mínimo 40% sobre costo y redondeo hacia arriba a múltiplos limpios.
 const CATALOGO_2026 = [
   // Volcanes & Fuentes
   { codigo: "POL-001", categoria: "Volcanes & Fuentes", nombre: "Volcancito", presentacion: "Unidad", costo_base: 900, precio_venta: 1400 },

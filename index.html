@@ -233,7 +233,7 @@
     <div class="header-inner">
       <div>
         <h1>PIROTECNIA <span>BARRANQUILLA</span> 2026</h1>
-        <div class="sub">Catálogo oficial de pedidos · Barranquilla y Soledad · Margen 40%+ redondeado</div>
+        <div class="sub">Catálogo oficial de pedidos · Barranquilla y Soledad</div>
       </div>
       <div class="sub" id="statsText">Cargando catálogo...</div>
     </div>
@@ -290,7 +290,7 @@
 
   <script src="catalogo_2026.js"></script>
   <script>
-    const WHATSAPP_NUMBER = "573046720294"; // Reemplaza por tu número de WhatsApp de ventas
+    const WHATSAPP_NUMBER = "573000000000";
     const state = {
       category: "Todos",
       search: "",
@@ -300,7 +300,7 @@
 
     const fmtCOP = (n) => "$" + Number(n || 0).toLocaleString("es-CO");
 
-    // Carga directa de img/<codigo>.jpg con fallback a SVG inline si falta alguna foto
+    // Carga directa desde img/<codigo>.jpg con respaldo SVG inline si falta alguna foto
     function getImgSrc(code) {
       return `img/${code}.jpg`;
     }
