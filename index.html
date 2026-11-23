@@ -15,14 +15,16 @@
       --accent-2: #ffb703;
       --border: #2a3342;
       --ok: #22c55e;
+      --warn: #f59e0b;
+      --danger: #ef4444;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.45;
-      padding-bottom: 92px;
+      line-height: 1.4;
+      padding-bottom: 98px;
     }
     header {
       background: linear-gradient(135deg, #1a1210 0%, #121722 100%);
@@ -55,7 +57,7 @@
       justify-content: space-between;
     }
     .search-input {
-      flex: 1 1 260px;
+      flex: 1 1 280px;
       background: var(--panel);
       border: 1px solid var(--border);
       color: var(--text);
@@ -63,27 +65,47 @@
       border-radius: 8px;
       font-size: 0.95rem;
     }
-    .cats { display: flex; flex-wrap: wrap; gap: 8px; }
-    .cat-btn {
+    .cat-select {
+      min-width: 240px;
+      flex: 0 1 300px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      cursor: pointer;
+    }
+    .quick-chips {
+      max-width: 1240px;
+      margin: 10px auto 0;
+      padding: 0 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .chip-btn {
       background: var(--panel);
       border: 1px solid var(--border);
       color: var(--muted);
-      padding: 7px 12px;
+      padding: 6px 12px;
       border-radius: 999px;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
+      font-weight: 600;
       cursor: pointer;
+      transition: all 0.15s ease;
     }
-    .cat-btn.active, .cat-btn:hover {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
+    .chip-btn.active, .chip-btn:hover {
+      border-color: var(--accent-2);
+      color: var(--text);
+      background: var(--panel-2);
     }
     .grid {
       max-width: 1240px;
-      margin: 18px auto 0;
+      margin: 16px auto 0;
       padding: 0 20px;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
       gap: 16px;
     }
     .card {
@@ -119,11 +141,54 @@
       padding: 2px 7px;
       border-radius: 6px;
     }
-    .card-body { padding: 14px; flex: 1; display: flex; flex-direction: column; gap: 6px; }
+    .stock-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 6px;
+      background: rgba(12, 15, 20, 0.9);
+      border: 1px solid var(--border);
+    }
+    .stock-ok { color: var(--ok); border-color: rgba(34, 197, 94, 0.4); }
+    .stock-low { color: var(--warn); border-color: rgba(245, 158, 11, 0.45); }
+    .stock-out { color: var(--danger); border-color: rgba(239, 68, 68, 0.45); }
+    .card-body { padding: 14px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
     .cat-label { font-size: 0.72rem; text-transform: uppercase; color: var(--accent-2); font-weight: 700; }
-    .title { font-size: 0.98rem; font-weight: 700; }
-    .pres { font-size: 0.82rem; color: var(--muted); }
-    .price { font-size: 1.12rem; font-weight: 800; color: var(--ok); margin-top: auto; padding-top: 4px; }
+    .title { font-size: 1.02rem; font-weight: 800; }
+    .variants { display: flex; flex-direction: column; gap: 6px; margin-top: 2px; }
+    .variant-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--panel-2);
+      cursor: pointer;
+      transition: border-color 0.15s ease, background 0.15s ease;
+      font-size: 0.82rem;
+    }
+    .variant-box.selected {
+      border-color: var(--accent-2);
+      background: #242d3d;
+    }
+    .variant-left { display: flex; align-items: center; gap: 8px; }
+    .variant-box input[type="radio"] { accent-color: var(--accent); cursor: pointer; }
+    .variant-name { font-weight: 600; color: var(--text); }
+    .variant-price { font-weight: 800; color: var(--ok); white-space: nowrap; }
+    .selected-summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.84rem;
+      color: var(--muted);
+      padding-top: 4px;
+    }
+    .selected-price { font-size: 1.08rem; font-weight: 800; color: var(--ok); }
     .card-actions {
       padding: 0 14px 14px;
       display: flex;
@@ -153,6 +218,11 @@
       font-size: 0.85rem;
       cursor: pointer;
     }
+    .add-btn:disabled {
+      background: #374151;
+      color: #9ca3af;
+      cursor: not-allowed;
+    }
     .cart-bar {
       position: fixed;
       bottom: 0; left: 0; right: 0;
@@ -179,6 +249,10 @@
       font-weight: 700;
       cursor: pointer;
     }
+    .wa-btn:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
     .sec-btn {
       background: transparent;
       color: var(--text);
@@ -202,9 +276,9 @@
       background: var(--panel);
       border: 1px solid var(--border);
       border-radius: 12px;
-      max-width: 560px;
+      max-width: 590px;
       width: 100%;
-      max-height: 85vh;
+      max-height: 90vh;
       overflow-y: auto;
       padding: 20px;
     }
@@ -217,6 +291,48 @@
       font-size: 0.88rem;
       gap: 8px;
     }
+    .delivery-notice {
+      margin-top: 14px;
+      padding: 11px 13px;
+      border-radius: 8px;
+      background: rgba(255, 183, 3, 0.1);
+      border: 1px solid rgba(255, 183, 3, 0.45);
+      color: #fde68a;
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+    .delivery-notice strong { color: var(--accent-2); }
+    .shipping-calc-box {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      font-size: 0.84rem;
+    }
+    .shipping-calc-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 6px;
+    }
+    .shipping-calc-row.total-row {
+      border-top: 1px dashed var(--border);
+      padding-top: 8px;
+      margin-top: 8px;
+      font-size: 0.96rem;
+      font-weight: 800;
+    }
+    .mini-btn {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      color: var(--accent-2);
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
     .field { margin-top: 12px; display: flex; flex-direction: column; gap: 4px; }
     .field label { font-size: 0.82rem; color: var(--muted); }
     .field input, .field select {
@@ -225,6 +341,29 @@
       color: var(--text);
       padding: 8px 10px;
       border-radius: 6px;
+      font-size: 0.92rem;
+    }
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    @media (max-width: 520px) {
+      .field-row { grid-template-columns: 1fr; }
+    }
+    .sync-status {
+      margin-top: 10px;
+      font-size: 0.82rem;
+      color: var(--accent-2);
+      min-height: 18px;
+    }
+    .modal-footer-actions {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
     }
   </style>
 </head>
@@ -233,15 +372,23 @@
     <div class="header-inner">
       <div>
         <h1>PIROTECNIA <span>BARRANQUILLA</span> 2026</h1>
-        <div class="sub">Catálogo oficial de pedidos · Barranquilla y Soledad</div>
+        <div class="sub">Catálogo oficial · Entregas exclusivamente a domicilio en Barranquilla y Soledad</div>
       </div>
-      <div class="sub" id="statsText">60 referencias disponibles</div>
+      <div class="sub" id="statsText">Pregunte por lo que no vea</div>
     </div>
   </header>
 
   <div class="controls">
     <input id="searchInput" class="search-input" type="search" placeholder="Buscar por código (POL-001), nombre, torta, presentación o combo..." />
-    <div class="cats" id="catButtons"></div>
+    <select id="categorySelect" class="cat-select" aria-label="Filtrar por categoría"></select>
+  </div>
+
+  <div class="quick-chips" id="quickChips">
+    <button class="chip-btn active" data-chip="Todos">Todos</button>
+    <button class="chip-btn" data-chip="Combos Promocionales 2026">Combos 2026</button>
+    <button class="chip-btn" data-chip="Tortas & Espectáculos Aéreos">Tortas & Aéreo</button>
+    <button class="chip-btn" data-chip="Volcanes & Fuentes">Volcanes & Fuentes</button>
+    <button class="chip-btn" data-chip="Golpes & Estallidos">Golpes & Estallidos</button>
   </div>
 
   <main class="grid" id="catalogGrid"></main>
@@ -249,11 +396,11 @@
   <div class="cart-bar">
     <div class="cart-inner">
       <div>
-        <strong id="cartSummary">0 unidades</strong> · Total: <strong id="cartTotal" style="color: var(--ok);">$0</strong>
+        <strong id="cartSummary">0 unidades</strong> · Productos: <strong id="cartTotal" style="color: var(--ok);">$0</strong>
       </div>
       <div style="display:flex; gap:10px;">
         <button class="sec-btn" id="openCartBtn">Ver pedido</button>
-        <button class="wa-btn" id="sendWaBtn">Enviar por WhatsApp</button>
+        <button class="wa-btn" id="sendWaBtn">Continuar pedido</button>
       </div>
     </div>
   </div>
@@ -261,526 +408,756 @@
   <div class="modal-backdrop" id="cartModal">
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-        <h3>Resumen de Pedido</h3>
-        <button class="qty-btn" id="closeModalBtn">✕</button>
+        <h3>Resumen y Datos de Domicilio</h3>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <button class="mini-btn" id="clearCartBtn" type="button">Limpiar carrito</button>
+          <button class="qty-btn" id="closeModalBtn" type="button">✕</button>
+        </div>
       </div>
+
       <div id="cartItemsList"></div>
-      <div class="field">
-        <label>Nombre del cliente</label>
-        <input id="clientName" type="text" placeholder="Ej. Carlos Mendoza" />
+
+      <div class="delivery-notice">
+        🚚 <strong>Entregas exclusivamente a domicilio:</strong><br/>
+        • El envío se calcula de forma aproximada a <strong>$3.000 por kilómetro</strong> según la distancia de entrega.<br/>
+        • <strong>¡Es negociable según el valor de tu compra!</strong> Entre mayor sea tu pedido, podemos ajustar o negociar el valor del domicilio.<br/>
+        • <strong>Requisito para despachar:</strong> para enviar tu orden debes tener <strong>pago como mínimo el valor del domicilio</strong>. El saldo del pedido puedes pagarlo al recibir o por transferencia.
       </div>
-      <div class="field">
-        <label>Sector / Zona de entrega</label>
-        <select id="clientZone">
-          <option value="Barranquilla">Barranquilla</option>
-          <option value="Soledad">Soledad</option>
-          <option value="Retiro / Coordinar">Retiro / Coordinar</option>
-        </select>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Vendedor *</label>
+          <select id="sellerSelect">
+            <option value="Renny Gambin">Renny Gambin</option>
+            <option value="Natasha Gambin">Natasha Gambin</option>
+            <option value="Natalia Luran">Natalia Luran</option>
+            <option value="Otro">Otro (especificar nombre)</option>
+          </select>
+        </div>
+        <div class="field" id="customSellerField" style="display:none;">
+          <label>Nombre del vendedor *</label>
+          <input id="customSellerName" type="text" placeholder="Escribe el nombre del vendedor" />
+        </div>
       </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Nombre completo *</label>
+          <input id="clientName" type="text" placeholder="Ej. Carlos Mendoza" required />
+        </div>
+        <div class="field">
+          <label>Teléfono / WhatsApp *</label>
+          <input id="clientPhone" type="tel" placeholder="Ej. 300 123 4567" required />
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Ciudad / Zona *</label>
+          <select id="clientZone">
+            <option value="Barranquilla">Barranquilla</option>
+            <option value="Soledad">Soledad</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Sector / Referencia (para estimar km)</label>
+          <select id="sectorRefSelect">
+            <option value="centro">Soledad Centro / Hipódromo (~2.5 km)</option>
+            <option value="ciudadela">Ciudadela 20 de Julio / Murillo (~4.5 km)</option>
+            <option value="norte_sur">Sur / Simón Bolívar / Cordialidad (~6.5 km)</option>
+            <option value="centro_bq">Centro Barranquilla / Barrio Abajo (~9.5 km)</option>
+            <option value="norte_bq">Norte / El Prado / Alto Prado (~13.5 km)</option>
+            <option value="buenavista">Buenavista / Villa Santos / Las Flores (~16.5 km)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Barrio *</label>
+          <input id="clientNeighborhood" type="text" placeholder="Ej. El Prado / Ciudadela" required />
+        </div>
+        <div class="field" style="justify-content:flex-end;">
+          <label style="opacity:0;">GPS</label>
+          <button class="mini-btn" id="useGpsBtn" type="button" style="padding:8px 10px; font-size:0.82rem;">📍 Calcular con mi ubicación GPS</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Dirección exacta *</label>
+        <input id="clientAddress" type="text" placeholder="Ej. Cra 54 # 72-100, Apto 301" required />
+      </div>
+
+      <div class="shipping-calc-box" id="shippingCalcBox">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Cálculo aproximado de domicilio ($3.000/km)</strong>
+          <span style="font-size:0.75rem; color:var(--accent-2);">Negociable según compra</span>
+        </div>
+        <div class="shipping-calc-row">
+          <span style="color:var(--muted);">Distancia estimada:</span>
+          <strong id="estKmText">2.5 km</strong>
+        </div>
+        <div class="shipping-calc-row">
+          <span style="color:var(--muted);">Domicilio estimado (~$3.000/km):</span>
+          <strong id="estShippingText" style="color:var(--accent-2);">$8.000</strong>
+        </div>
+        <div class="shipping-calc-row">
+          <span style="color:var(--muted);">Sugerencia por valor de compra:</span>
+          <span id="shippingNegotiationNote" style="color:var(--ok); font-size:0.78rem; text-align:right; max-width:62%;">Aplica negociación según monto total</span>
+        </div>
+        <div class="shipping-calc-row total-row">
+          <span>Total estimado (Productos + Domicilio):</span>
+          <span id="modalGrandTotal" style="color:var(--ok);">$0</span>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Modalidad de entrega</label>
+          <input id="deliveryMode" type="text" value="Solo a domicilio" readonly />
+        </div>
+        <div class="field">
+          <label>Método de pago del pedido</label>
+          <select id="paymentMethod">
+            <option value="Contraentrega (anticipo valor domicilio)">Contraentrega (anticipo valor domicilio)</option>
+            <option value="Transferencia Bancolombia / Nequi">Transferencia Bancolombia / Nequi</option>
+          </select>
+        </div>
+      </div>
+
       <div class="field">
         <label>Notas adicionales</label>
-        <input id="clientNote" type="text" placeholder="Ej. Hora de entrega o referencia" />
+        <input id="clientNote" type="text" placeholder="Ej. Hora de entrega o referencia de portería" />
       </div>
-      <div style="margin-top:16px; display:flex; justify-content:space-between; align-items:center;">
-        <strong>Total: <span id="modalTotal" style="color:var(--ok);">$0</span></strong>
-        <button class="wa-btn" id="modalSendBtn">Pedir por WhatsApp</button>
+
+      <div class="sync-status" id="syncStatus"></div>
+      <div class="modal-footer-actions">
+        <strong>Productos: <span id="modalTotal" style="color:var(--ok);">$0</span></strong>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <button class="sec-btn" id="copySummaryBtn" type="button">Copiar resumen</button>
+          <button class="wa-btn" id="modalSendBtn" type="button">Registrar y Pedir por WhatsApp</button>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
-    const WHATSAPP_NUMBER = "573000000000";
-    const CATALOGO_2026 = [
-  {
-    "codigo": "POL-001",
-    "categoria": "Volcanes & Fuentes",
-    "nombre": "Volcancito",
-    "presentacion": "Unidad",
-    "costo_base": 900,
-    "precio_venta": 1400
-  },
-  {
-    "codigo": "POL-002",
-    "categoria": "Volcanes & Fuentes",
-    "nombre": "Volcancito",
-    "presentacion": "Media Docena (x6)",
-    "costo_base": 5000,
-    "precio_venta": 7200
-  },
-  {
-    "codigo": "POL-003",
-    "categoria": "Volcanes & Fuentes",
-    "nombre": "Volcancito",
-    "presentacion": "Pack x10 Unidades",
-    "costo_base": 9500,
-    "precio_venta": 13500
-  },
-  {
-    "codigo": "POL-004",
-    "categoria": "Volcanes & Fuentes",
-    "nombre": "Volcán Grande",
-    "presentacion": "Unidad",
-    "costo_base": 4800,
-    "precio_venta": 7000
-  },
-  {
-    "codigo": "POL-005",
-    "categoria": "Volcanes & Fuentes",
-    "nombre": "Volcán Grande",
-    "presentacion": "Media Docena (x6)",
-    "costo_base": 27000,
-    "precio_venta": 38500
-  },
-  {
-    "codigo": "POL-006",
-    "categoria": "Volcanes & Fuentes",
-    "nombre": "Volcán Grande",
-    "presentacion": "Docena (x12)",
-    "costo_base": 54000,
-    "precio_venta": 77000
-  },
-  {
-    "codigo": "POL-007",
-    "categoria": "Volcanes & Fuentes",
-    "nombre": "Fuente Cuco Pequeña",
-    "presentacion": "Unidad",
-    "costo_base": 3500,
-    "precio_venta": 5000
-  },
-  {
-    "codigo": "POL-008",
-    "categoria": "Volcanes & Fuentes",
-    "nombre": "Fuente Cuco Grande",
-    "presentacion": "Unidad",
-    "costo_base": 6200,
-    "precio_venta": 9000
-  },
-  {
-    "codigo": "POL-009",
-    "categoria": "Volcanes & Fuentes",
-    "nombre": "Fuente Festival / Triangular",
-    "presentacion": "Unidad",
-    "costo_base": 52000,
-    "precio_venta": 75000
-  },
-  {
-    "codigo": "POL-010",
-    "categoria": "Luces, Bengalas & Humos",
-    "nombre": "Chispitas Mariposas",
-    "presentacion": "Pack x6 Cajitas",
-    "costo_base": 7000,
-    "precio_venta": 10000
-  },
-  {
-    "codigo": "POL-011",
-    "categoria": "Luces, Bengalas & Humos",
-    "nombre": "Chispitas Mariposas",
-    "presentacion": "Caja x12 Cajitas",
-    "costo_base": 12500,
-    "precio_venta": 18000
-  },
-  {
-    "codigo": "POL-012",
-    "categoria": "Luces, Bengalas & Humos",
-    "nombre": "Bengala de Humo (Azul / Rosada / Roja)",
-    "presentacion": "Unidad",
-    "costo_base": 17500,
-    "precio_venta": 25000
-  },
-  {
-    "codigo": "POL-013",
-    "categoria": "Luces, Bengalas & Humos",
-    "nombre": "Humo de Colores (RO-AM-MO-AZ)",
-    "presentacion": "Unidad",
-    "costo_base": 17500,
-    "precio_venta": 25000
-  },
-  {
-    "codigo": "POL-014",
-    "categoria": "Efectos Giratorios & Piso",
-    "nombre": "Rosa Cracker (Rosita)",
-    "presentacion": "Pack x6 Unidades",
-    "costo_base": 4800,
-    "precio_venta": 7000
-  },
-  {
-    "codigo": "POL-015",
-    "categoria": "Efectos Giratorios & Piso",
-    "nombre": "Rosa Cracker (Rosita)",
-    "presentacion": "Media Docena Packs (x36)",
-    "costo_base": 29500,
-    "precio_venta": 42000
-  },
-  {
-    "codigo": "POL-016",
-    "categoria": "Efectos Giratorios & Piso",
-    "nombre": "Rosa Cracker (Rosita)",
-    "presentacion": "Caja x72 Unidades",
-    "costo_base": 42000,
-    "precio_venta": 60000
-  },
-  {
-    "codigo": "POL-017",
-    "categoria": "Efectos Giratorios & Piso",
-    "nombre": "Crackel Barrel (Barrilito)",
-    "presentacion": "Unidad",
-    "costo_base": 5500,
-    "precio_venta": 8000
-  },
-  {
-    "codigo": "POL-018",
-    "categoria": "Efectos Giratorios & Piso",
-    "nombre": "Crackel Barrel (Barrilito)",
-    "presentacion": "Caja x6 Unidades",
-    "costo_base": 29500,
-    "precio_venta": 42000
-  },
-  {
-    "codigo": "POL-019",
-    "categoria": "Efectos Giratorios & Piso",
-    "nombre": "Helicóptero",
-    "presentacion": "Unidad / Pack",
-    "costo_base": 17500,
-    "precio_venta": 25000
-  },
-  {
-    "codigo": "POL-020",
-    "categoria": "Varas, Cohetes & Lanzadores",
-    "nombre": "Vara Soplona 30 Luces",
-    "presentacion": "Unidad",
-    "costo_base": 8400,
-    "precio_venta": 12000
-  },
-  {
-    "codigo": "POL-021",
-    "categoria": "Varas, Cohetes & Lanzadores",
-    "nombre": "Vara Soplona 30 Luces",
-    "presentacion": "Pack x6 Unidades",
-    "costo_base": 46000,
-    "precio_venta": 65000
-  },
-  {
-    "codigo": "POL-022",
-    "categoria": "Varas, Cohetes & Lanzadores",
-    "nombre": "Vara Soplona 30 Luces",
-    "presentacion": "Docena (x12)",
-    "costo_base": 85000,
-    "precio_venta": 120000
-  },
-  {
-    "codigo": "POL-023",
-    "categoria": "Varas, Cohetes & Lanzadores",
-    "nombre": "Mini Cohete Silbador",
-    "presentacion": "Pack x12 Unidades",
-    "costo_base": 4200,
-    "precio_venta": 6000
-  },
-  {
-    "codigo": "POL-024",
-    "categoria": "Varas, Cohetes & Lanzadores",
-    "nombre": "Voladores Virgen del Carmen",
-    "presentacion": "Docena (x12)",
-    "costo_base": 41000,
-    "precio_venta": 58500
-  },
-  {
-    "codigo": "POL-025",
-    "categoria": "Varas, Cohetes & Lanzadores",
-    "nombre": "Bazuka Mini",
-    "presentacion": "Unidad",
-    "costo_base": 101000,
-    "precio_venta": 142000
-  },
-  {
-    "codigo": "POL-026",
-    "categoria": "Varas, Cohetes & Lanzadores",
-    "nombre": "Bazuka 188 Luces",
-    "presentacion": "Unidad",
-    "costo_base": 190000,
-    "precio_venta": 267000
-  },
-  {
-    "codigo": "POL-027",
-    "categoria": "Detonantes Menores & de Mecha",
-    "nombre": "Traqui Traqui",
-    "presentacion": "Hoja x150 Unidades",
-    "costo_base": 5600,
-    "precio_venta": 8000
-  },
-  {
-    "codigo": "POL-028",
-    "categoria": "Detonantes Menores & de Mecha",
-    "nombre": "Traqui Traqui",
-    "presentacion": "Cartilla x600 (4 hojas)",
-    "costo_base": 21000,
-    "precio_venta": 30000
-  },
-  {
-    "codigo": "POL-029",
-    "categoria": "Detonantes Menores & de Mecha",
-    "nombre": "Zeus Pintalabios",
-    "presentacion": "Unidad",
-    "costo_base": 4200,
-    "precio_venta": 6000
-  },
-  {
-    "codigo": "POL-030",
-    "categoria": "Detonantes Menores & de Mecha",
-    "nombre": "Zeus Pintalabios",
-    "presentacion": "Pack x5 Unidades",
-    "costo_base": 19500,
-    "precio_venta": 28000
-  },
-  {
-    "codigo": "POL-031",
-    "categoria": "Detonantes Menores & de Mecha",
-    "nombre": "Zeus Pintalabios",
-    "presentacion": "Caja x20 Unidades",
-    "costo_base": 72000,
-    "precio_venta": 102000
-  },
-  {
-    "codigo": "POL-032",
-    "categoria": "Golpes & Estallidos",
-    "nombre": "4 Golpes",
-    "presentacion": "Pack x30 Uds (5 cajitas)",
-    "costo_base": 6500,
-    "precio_venta": 9500
-  },
-  {
-    "codigo": "POL-033",
-    "categoria": "Golpes & Estallidos",
-    "nombre": "4 Golpes",
-    "presentacion": "Paquete x120 (20 cajitas)",
-    "costo_base": 24000,
-    "precio_venta": 34000
-  },
-  {
-    "codigo": "POL-034",
-    "categoria": "Golpes & Estallidos",
-    "nombre": "1 Golpe (Fosforito)",
-    "presentacion": "Pack x20 Unidades",
-    "costo_base": 3500,
-    "precio_venta": 5000
-  },
-  {
-    "codigo": "POL-035",
-    "categoria": "Golpes & Estallidos",
-    "nombre": "1 Golpe (Fosforito)",
-    "presentacion": "Caja x100 Unidades",
-    "costo_base": 15000,
-    "precio_venta": 22000
-  },
-  {
-    "codigo": "POL-036",
-    "categoria": "Golpes & Estallidos",
-    "nombre": "Martillo",
-    "presentacion": "Pack x10 Unidades",
-    "costo_base": 7500,
-    "precio_venta": 11000
-  },
-  {
-    "codigo": "POL-037",
-    "categoria": "Golpes & Estallidos",
-    "nombre": "Martillo",
-    "presentacion": "Caja x60 Unidades",
-    "costo_base": 40000,
-    "precio_venta": 57000
-  },
-  {
-    "codigo": "POL-038",
-    "categoria": "Golpes & Estallidos",
-    "nombre": "Metralleta",
-    "presentacion": "Pack x5 Unidades",
-    "costo_base": 8500,
-    "precio_venta": 12000
-  },
-  {
-    "codigo": "POL-039",
-    "categoria": "Golpes & Estallidos",
-    "nombre": "Metralleta",
-    "presentacion": "Paquete x40 Unidades",
-    "costo_base": 60000,
-    "precio_venta": 85000
-  },
-  {
-    "codigo": "POL-040",
-    "categoria": "Golpes & Estallidos",
-    "nombre": "Triangulito / Tumbarancho",
-    "presentacion": "Pack / Unidad",
-    "costo_base": 9000,
-    "precio_venta": 13000
-  },
-  {
-    "codigo": "POL-041",
-    "categoria": "Golpes & Estallidos",
-    "nombre": "Detonante Especial POL-041",
-    "presentacion": "Unidad",
-    "costo_base": 10000,
-    "precio_venta": 14500
-  },
-  {
-    "codigo": "POL-042",
-    "categoria": "Golpes & Estallidos",
-    "nombre": "Detonante Especial POL-042",
-    "presentacion": "Unidad",
-    "costo_base": 12000,
-    "precio_venta": 17000
-  },
-  {
-    "codigo": "POL-043",
-    "categoria": "Golpes & Estallidos",
-    "nombre": "Detonante Especial POL-043",
-    "presentacion": "Unidad",
-    "costo_base": 14000,
-    "precio_venta": 20000
-  },
-  {
-    "codigo": "POL-044",
-    "categoria": "Golpes & Estallidos",
-    "nombre": "Detonante Especial POL-044",
-    "presentacion": "Unidad",
-    "costo_base": 16000,
-    "precio_venta": 23000
-  },
-  {
-    "codigo": "POL-045",
-    "categoria": "Tortas & Espectáculos Aéreos",
-    "nombre": "Torta 16 Luces / Tiros",
-    "presentacion": "Unidad",
-    "costo_base": 45000,
-    "precio_venta": 65000
-  },
-  {
-    "codigo": "POL-046",
-    "categoria": "Tortas & Espectáculos Aéreos",
-    "nombre": "Torta 19 Luces / Tiros",
-    "presentacion": "Unidad",
-    "costo_base": 58000,
-    "precio_venta": 82000
-  },
-  {
-    "codigo": "POL-047",
-    "categoria": "Tortas & Espectáculos Aéreos",
-    "nombre": "Torta 25 Luces / Tiros",
-    "presentacion": "Unidad",
-    "costo_base": 75000,
-    "precio_venta": 105000
-  },
-  {
-    "codigo": "POL-048",
-    "categoria": "Tortas & Espectáculos Aéreos",
-    "nombre": "Torta 30 Luces / Tiros",
-    "presentacion": "Unidad",
-    "costo_base": 95000,
-    "precio_venta": 135000
-  },
-  {
-    "codigo": "POL-049",
-    "categoria": "Tortas & Espectáculos Aéreos",
-    "nombre": "Torta 42 Luces / Tiros",
-    "presentacion": "Unidad",
-    "costo_base": 135000,
-    "precio_venta": 190000
-  },
-  {
-    "codigo": "POL-050",
-    "categoria": "Tortas & Espectáculos Aéreos",
-    "nombre": "Torta 100 Luces / Tiros",
-    "presentacion": "Unidad",
-    "costo_base": 290000,
-    "precio_venta": 410000
-  },
-  {
-    "codigo": "POL-051",
-    "categoria": "Tortas & Espectáculos Aéreos",
-    "nombre": "Torta Revelación de Género",
-    "presentacion": "Unidad",
-    "costo_base": 120000,
-    "precio_venta": 170000
-  },
-  {
-    "codigo": "POL-052",
-    "categoria": "Tortas & Espectáculos Aéreos",
-    "nombre": "Torta Show Especial / Gran Formato",
-    "presentacion": "Unidad",
-    "costo_base": 360000,
-    "precio_venta": 505000
-  },
-  {
-    "codigo": "COMBO-01",
-    "categoria": "Combos Promocionales 2026",
-    "nombre": "Combo Familiar Inicial",
-    "presentacion": "Pack surtido luces y volcanes",
-    "costo_base": 35000,
-    "precio_venta": 50000
-  },
-  {
-    "codigo": "COMBO-02",
-    "categoria": "Combos Promocionales 2026",
-    "nombre": "Combo Infantil Seguro",
-    "presentacion": "Chispitas, humos y rositas",
-    "costo_base": 42000,
-    "precio_venta": 60000
-  },
-  {
-    "codigo": "COMBO-03",
-    "categoria": "Combos Promocionales 2026",
-    "nombre": "Combo Luces & Color",
-    "presentacion": "Varas, fuentes y bengalas",
-    "costo_base": 68000,
-    "precio_venta": 96000
-  },
-  {
-    "codigo": "COMBO-04",
-    "categoria": "Combos Promocionales 2026",
-    "nombre": "Combo Estallido Barranquilla",
-    "presentacion": "Golpes, martillos y metralletas",
-    "costo_base": 75000,
-    "precio_venta": 106000
-  },
-  {
-    "codigo": "COMBO-05",
-    "categoria": "Combos Promocionales 2026",
-    "nombre": "Combo Fiesta Soledad",
-    "presentacion": "Tortas, volcanes y varas",
-    "costo_base": 130000,
-    "precio_venta": 185000
-  },
-  {
-    "codigo": "COMBO-06",
-    "categoria": "Combos Promocionales 2026",
-    "nombre": "Combo Celebración Premium",
-    "presentacion": "Selección aérea y luces",
-    "costo_base": 195000,
-    "precio_venta": 275000
-  },
-  {
-    "codigo": "COMBO-07",
-    "categoria": "Combos Promocionales 2026",
-    "nombre": "Combo Evento / Reunión",
-    "presentacion": "Surtido alto rendimiento",
-    "costo_base": 260000,
-    "precio_venta": 365000
-  },
-  {
-    "codigo": "COMBO-08",
-    "categoria": "Combos Promocionales 2026",
-    "nombre": "Combo Gran Show Fin de Año",
-    "presentacion": "Paquete completo gran formato",
-    "costo_base": 420000,
-    "precio_venta": 590000
-  }
-];
+    const WHATSAPP_NUMBER = "573046720294";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_uXFu419i_NbP8-a6axqp9cveqcJsaeariXRRwsY-LFbLE3RuLPvh8HAAR8XOEseB/exec";
+    const BOGOTA_TZ = "America/Bogota";
+
+    // Internal dispatch origin coordinates (not exposed in UI or order messages)
+    const DISPATCH_ORIGIN = { lat: 10.9282, lon: -74.7654 };
+    const RATE_PER_KM = 3000;
+    const ROAD_FACTOR = 1.28;
+
+    const SECTOR_DISTANCES_KM = {
+      centro: 2.5,
+      ciudadela: 4.5,
+      norte_sur: 6.5,
+      centro_bq: 9.5,
+      norte_bq: 13.5,
+      buenavista: 16.5
+    };
+
+    const CATALOGO_AGRUPADO = [
+      {
+        "id": "PROD-001",
+        "categoria": "Volcanes & Fuentes",
+        "nombre": "Volcancito",
+        "imagen_codigo": "POL-001",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-001", "presentacion": "Unidad", "costo_base": 900, "precio_venta": 1400 },
+          { "codigo": "POL-002", "presentacion": "Media Docena (x6)", "costo_base": 5000, "precio_venta": 7200 },
+          { "codigo": "POL-003", "presentacion": "Pack x10 Unidades", "costo_base": 9500, "precio_venta": 13500 }
+        ]
+      },
+      {
+        "id": "PROD-002",
+        "categoria": "Volcanes & Fuentes",
+        "nombre": "Volcán Grande",
+        "imagen_codigo": "POL-004",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-004", "presentacion": "Unidad", "costo_base": 4800, "precio_venta": 7000 },
+          { "codigo": "POL-005", "presentacion": "Media Docena (x6)", "costo_base": 27000, "precio_venta": 38500 },
+          { "codigo": "POL-006", "presentacion": "Docena (x12)", "costo_base": 54000, "precio_venta": 77000 }
+        ]
+      },
+      {
+        "id": "PROD-003",
+        "categoria": "Volcanes & Fuentes",
+        "nombre": "Fuente Cuco Pequeña",
+        "imagen_codigo": "POL-007",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-007", "presentacion": "Unidad", "costo_base": 3500, "precio_venta": 5000 }
+        ]
+      },
+      {
+        "id": "PROD-004",
+        "categoria": "Volcanes & Fuentes",
+        "nombre": "Fuente Cuco Grande",
+        "imagen_codigo": "POL-008",
+        "stock": "Pocas unidades",
+        "presentaciones": [
+          { "codigo": "POL-008", "presentacion": "Unidad", "costo_base": 6200, "precio_venta": 9000 }
+        ]
+      },
+      {
+        "id": "PROD-005",
+        "categoria": "Volcanes & Fuentes",
+        "nombre": "Fuente Festival / Triangular",
+        "imagen_codigo": "POL-009",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-009", "presentacion": "Unidad", "costo_base": 52000, "precio_venta": 75000 }
+        ]
+      },
+      {
+        "id": "PROD-006",
+        "categoria": "Luces, Bengalas & Humos",
+        "nombre": "Chispitas Mariposas",
+        "imagen_codigo": "POL-010",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-010", "presentacion": "Pack x6 Cajitas", "costo_base": 7000, "precio_venta": 10000 },
+          { "codigo": "POL-011", "presentacion": "Caja x12 Cajitas", "costo_base": 12500, "precio_venta": 18000 }
+        ]
+      },
+      {
+        "id": "PROD-007",
+        "categoria": "Luces, Bengalas & Humos",
+        "nombre": "Bengala de Humo (Azul / Rosada / Roja)",
+        "imagen_codigo": "POL-012",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-012", "presentacion": "Unidad", "costo_base": 17500, "precio_venta": 25000 }
+        ]
+      },
+      {
+        "id": "PROD-008",
+        "categoria": "Luces, Bengalas & Humos",
+        "nombre": "Humo de Colores (RO-AM-MO-AZ)",
+        "imagen_codigo": "POL-013",
+        "stock": "Pocas unidades",
+        "presentaciones": [
+          { "codigo": "POL-013", "presentacion": "Unidad", "costo_base": 17500, "precio_venta": 25000 }
+        ]
+      },
+      {
+        "id": "PROD-009",
+        "categoria": "Efectos Giratorios & Piso",
+        "nombre": "Rosa Cracker (Rosita)",
+        "imagen_codigo": "POL-014",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-014", "presentacion": "Pack x6 Unidades", "costo_base": 4800, "precio_venta": 7000 },
+          { "codigo": "POL-015", "presentacion": "Media Docena Packs (x36)", "costo_base": 29500, "precio_venta": 42000 },
+          { "codigo": "POL-016", "presentacion": "Caja x72 Unidades", "costo_base": 42000, "precio_venta": 60000 }
+        ]
+      },
+      {
+        "id": "PROD-010",
+        "categoria": "Efectos Giratorios & Piso",
+        "nombre": "Crackel Barrel (Barrilito)",
+        "imagen_codigo": "POL-017",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-017", "presentacion": "Unidad", "costo_base": 5500, "precio_venta": 8000 },
+          { "codigo": "POL-018", "presentacion": "Caja x6 Unidades", "costo_base": 29500, "precio_venta": 42000 }
+        ]
+      },
+      {
+        "id": "PROD-011",
+        "categoria": "Efectos Giratorios & Piso",
+        "nombre": "Helicóptero",
+        "imagen_codigo": "POL-019",
+        "stock": "Pocas unidades",
+        "presentaciones": [
+          { "codigo": "POL-019", "presentacion": "Unidad / Pack", "costo_base": 17500, "precio_venta": 25000 }
+        ]
+      },
+      {
+        "id": "PROD-012",
+        "categoria": "Varas, Cohetes & Lanzadores",
+        "nombre": "Vara Soplona 30 Luces",
+        "imagen_codigo": "POL-020",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-020", "presentacion": "Unidad", "costo_base": 8400, "precio_venta": 12000 },
+          { "codigo": "POL-021", "presentacion": "Pack x6 Unidades", "costo_base": 46000, "precio_venta": 65000 },
+          { "codigo": "POL-022", "presentacion": "Docena (x12)", "costo_base": 85000, "precio_venta": 120000 }
+        ]
+      },
+      {
+        "id": "PROD-013",
+        "categoria": "Varas, Cohetes & Lanzadores",
+        "nombre": "Mini Cohete Silbador",
+        "imagen_codigo": "POL-023",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-023", "presentacion": "Pack x12 Unidades", "costo_base": 4200, "precio_venta": 6000 }
+        ]
+      },
+      {
+        "id": "PROD-014",
+        "categoria": "Varas, Cohetes & Lanzadores",
+        "nombre": "Voladores Virgen del Carmen",
+        "imagen_codigo": "POL-024",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-024", "presentacion": "Docena (x12)", "costo_base": 41000, "precio_venta": 58500 }
+        ]
+      },
+      {
+        "id": "PROD-015",
+        "categoria": "Varas, Cohetes & Lanzadores",
+        "nombre": "Bazuka Mini",
+        "imagen_codigo": "POL-025",
+        "stock": "Pocas unidades",
+        "presentaciones": [
+          { "codigo": "POL-025", "presentacion": "Unidad", "costo_base": 101000, "precio_venta": 142000 }
+        ]
+      },
+      {
+        "id": "PROD-016",
+        "categoria": "Varas, Cohetes & Lanzadores",
+        "nombre": "Bazuka 188 Luces",
+        "imagen_codigo": "POL-026",
+        "stock": "Pocas unidades",
+        "presentaciones": [
+          { "codigo": "POL-026", "presentacion": "Unidad", "costo_base": 190000, "precio_venta": 267000 }
+        ]
+      },
+      {
+        "id": "PROD-017",
+        "categoria": "Detonantes Menores & de Mecha",
+        "nombre": "Traqui Traqui",
+        "imagen_codigo": "POL-027",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-027", "presentacion": "Hoja x150 Unidades", "costo_base": 5600, "precio_venta": 8000 },
+          { "codigo": "POL-028", "presentacion": "Cartilla x600 (4 hojas)", "costo_base": 21000, "precio_venta": 30000 }
+        ]
+      },
+      {
+        "id": "PROD-018",
+        "categoria": "Detonantes Menores & de Mecha",
+        "nombre": "Zeus Pintalabios",
+        "imagen_codigo": "POL-029",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-029", "presentacion": "Unidad", "costo_base": 4200, "precio_venta": 6000 },
+          { "codigo": "POL-030", "presentacion": "Pack x5 Unidades", "costo_base": 19500, "precio_venta": 28000 },
+          { "codigo": "POL-031", "presentacion": "Caja x20 Unidades", "costo_base": 72000, "precio_venta": 102000 }
+        ]
+      },
+      {
+        "id": "PROD-019",
+        "categoria": "Golpes & Estallidos",
+        "nombre": "4 Golpes",
+        "imagen_codigo": "POL-032",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-032", "presentacion": "Pack x30 Uds (5 cajitas)", "costo_base": 6500, "precio_venta": 9500 },
+          { "codigo": "POL-033", "presentacion": "Paquete x120 (20 cajitas)", "costo_base": 24000, "precio_venta": 34000 }
+        ]
+      },
+      {
+        "id": "PROD-020",
+        "categoria": "Golpes & Estallidos",
+        "nombre": "1 Golpe (Fosforito)",
+        "imagen_codigo": "POL-034",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-034", "presentacion": "Pack x20 Unidades", "costo_base": 3500, "precio_venta": 5000 },
+          { "codigo": "POL-035", "presentacion": "Caja x100 Unidades", "costo_base": 15000, "precio_venta": 22000 }
+        ]
+      },
+      {
+        "id": "PROD-021",
+        "categoria": "Golpes & Estallidos",
+        "nombre": "Martillo",
+        "imagen_codigo": "POL-036",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-036", "presentacion": "Pack x10 Unidades", "costo_base": 7500, "precio_venta": 11000 },
+          { "codigo": "POL-037", "presentacion": "Caja x60 Unidades", "costo_base": 40000, "precio_venta": 57000 }
+        ]
+      },
+      {
+        "id": "PROD-022",
+        "categoria": "Golpes & Estallidos",
+        "nombre": "Metralleta",
+        "imagen_codigo": "POL-038",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-038", "presentacion": "Pack x5 Unidades", "costo_base": 8500, "precio_venta": 12000 },
+          { "codigo": "POL-039", "presentacion": "Paquete x40 Unidades", "costo_base": 60000, "precio_venta": 85000 }
+        ]
+      },
+      {
+        "id": "PROD-023",
+        "categoria": "Golpes & Estallidos",
+        "nombre": "Triangulito / Tumbarancho",
+        "imagen_codigo": "POL-040",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-040", "presentacion": "Pack / Unidad", "costo_base": 9000, "precio_venta": 13000 }
+        ]
+      },
+      {
+        "id": "PROD-024",
+        "categoria": "Golpes & Estallidos",
+        "nombre": "Detonante Especial POL-041",
+        "imagen_codigo": "POL-041",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-041", "presentacion": "Unidad", "costo_base": 10000, "precio_venta": 14500 }
+        ]
+      },
+      {
+        "id": "PROD-025",
+        "categoria": "Golpes & Estallidos",
+        "nombre": "Detonante Especial POL-042",
+        "imagen_codigo": "POL-042",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-042", "presentacion": "Unidad", "costo_base": 12000, "precio_venta": 17000 }
+        ]
+      },
+      {
+        "id": "PROD-026",
+        "categoria": "Golpes & Estallidos",
+        "nombre": "Detonante Especial POL-043",
+        "imagen_codigo": "POL-043",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-043", "presentacion": "Unidad", "costo_base": 14000, "precio_venta": 20000 }
+        ]
+      },
+      {
+        "id": "PROD-027",
+        "categoria": "Golpes & Estallidos",
+        "nombre": "Detonante Especial POL-044",
+        "imagen_codigo": "POL-044",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-044", "presentacion": "Unidad", "costo_base": 16000, "precio_venta": 23000 }
+        ]
+      },
+      {
+        "id": "PROD-028",
+        "categoria": "Tortas & Espectáculos Aéreos",
+        "nombre": "Torta 16 Luces / Tiros",
+        "imagen_codigo": "POL-045",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-045", "presentacion": "Unidad", "costo_base": 45000, "precio_venta": 65000 }
+        ]
+      },
+      {
+        "id": "PROD-029",
+        "categoria": "Tortas & Espectáculos Aéreos",
+        "nombre": "Torta 19 Luces / Tiros",
+        "imagen_codigo": "POL-046",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-046", "presentacion": "Unidad", "costo_base": 58000, "precio_venta": 82000 }
+        ]
+      },
+      {
+        "id": "PROD-030",
+        "categoria": "Tortas & Espectáculos Aéreos",
+        "nombre": "Torta 25 Luces / Tiros",
+        "imagen_codigo": "POL-047",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-047", "presentacion": "Unidad", "costo_base": 75000, "precio_venta": 105000 }
+        ]
+      },
+      {
+        "id": "PROD-031",
+        "categoria": "Tortas & Espectáculos Aéreos",
+        "nombre": "Torta 30 Luces / Tiros",
+        "imagen_codigo": "POL-048",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-048", "presentacion": "Unidad", "costo_base": 95000, "precio_venta": 135000 }
+        ]
+      },
+      {
+        "id": "PROD-032",
+        "categoria": "Tortas & Espectáculos Aéreos",
+        "nombre": "Torta 42 Luces / Tiros",
+        "imagen_codigo": "POL-049",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-049", "presentacion": "Unidad", "costo_base": 135000, "precio_venta": 190000 }
+        ]
+      },
+      {
+        "id": "PROD-033",
+        "categoria": "Tortas & Espectáculos Aéreos",
+        "nombre": "Torta 100 Luces / Tiros",
+        "imagen_codigo": "POL-050",
+        "stock": "Pocas unidades",
+        "presentaciones": [
+          { "codigo": "POL-050", "presentacion": "Unidad", "costo_base": 290000, "precio_venta": 410000 }
+        ]
+      },
+      {
+        "id": "PROD-034",
+        "categoria": "Tortas & Espectáculos Aéreos",
+        "nombre": "Torta Revelación de Género",
+        "imagen_codigo": "POL-051",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-051", "presentacion": "Unidad", "costo_base": 120000, "precio_venta": 170000 }
+        ]
+      },
+      {
+        "id": "PROD-035",
+        "categoria": "Tortas & Espectáculos Aéreos",
+        "nombre": "Torta Show Especial / Gran Formato",
+        "imagen_codigo": "POL-052",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-052", "presentacion": "Unidad", "costo_base": 360000, "precio_venta": 505000 }
+        ]
+      },
+      {
+        "id": "PROD-036",
+        "categoria": "Combos Promocionales 2026",
+        "nombre": "Combo Familiar Inicial",
+        "imagen_codigo": "COMBO-01",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "COMBO-01", "presentacion": "Pack surtido luces y volcanes", "costo_base": 35000, "precio_venta": 50000 }
+        ]
+      },
+      {
+        "id": "PROD-037",
+        "categoria": "Combos Promocionales 2026",
+        "nombre": "Combo Infantil Seguro",
+        "imagen_codigo": "COMBO-02",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "COMBO-02", "presentacion": "Chispitas, humos y rositas", "costo_base": 42000, "precio_venta": 60000 }
+        ]
+      },
+      {
+        "id": "PROD-038",
+        "categoria": "Combos Promocionales 2026",
+        "nombre": "Combo Luces & Color",
+        "imagen_codigo": "COMBO-03",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "COMBO-03", "presentacion": "Varas, fuentes y bengalas", "costo_base": 68000, "precio_venta": 96000 }
+        ]
+      },
+      {
+        "id": "PROD-039",
+        "categoria": "Combos Promocionales 2026",
+        "nombre": "Combo Estallido Barranquilla",
+        "imagen_codigo": "COMBO-04",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "COMBO-04", "presentacion": "Golpes, martillos y metralletas", "costo_base": 75000, "precio_venta": 106000 }
+        ]
+      },
+      {
+        "id": "PROD-040",
+        "categoria": "Combos Promocionales 2026",
+        "nombre": "Combo Fiesta Soledad",
+        "imagen_codigo": "COMBO-05",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "COMBO-05", "presentacion": "Tortas, volcanes y varas", "costo_base": 130000, "precio_venta": 185000 }
+        ]
+      },
+      {
+        "id": "PROD-041",
+        "categoria": "Combos Promocionales 2026",
+        "nombre": "Combo Celebración Premium",
+        "imagen_codigo": "COMBO-06",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "COMBO-06", "presentacion": "Selección aérea y luces", "costo_base": 195000, "precio_venta": 275000 }
+        ]
+      },
+      {
+        "id": "PROD-042",
+        "categoria": "Combos Promocionales 2026",
+        "nombre": "Combo Evento / Reunión",
+        "imagen_codigo": "COMBO-07",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "COMBO-07", "presentacion": "Surtido alto rendimiento", "costo_base": 260000, "precio_venta": 365000 }
+        ]
+      },
+      {
+        "id": "PROD-043",
+        "categoria": "Combos Promocionales 2026",
+        "nombre": "Combo Gran Show Fin de Año",
+        "imagen_codigo": "COMBO-08",
+        "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "COMBO-08", "presentacion": "Paquete completo gran formato", "costo_base": 420000, "precio_venta": 590000 }
+        ]
+      }
+    ];
+
+    const CATALOGO_PLANO = [];
+    CATALOGO_AGRUPADO.forEach(prod => {
+      prod.presentaciones.forEach(pres => {
+        CATALOGO_PLANO.push({
+          codigo: pres.codigo,
+          categoria: prod.categoria,
+          nombre: prod.nombre,
+          presentacion: pres.presentacion,
+          precio_venta: pres.precio_venta,
+          stock: prod.stock || "Disponible"
+        });
+      });
+    });
 
     const state = {
       category: "Todos",
       search: "",
+      selectedVariant: {},
       quantities: {},
-      cart: {}
+      cart: {},
+      gpsKm: null
     };
 
+    CATALOGO_AGRUPADO.forEach(prod => {
+      if (prod.presentaciones.length > 0) {
+        state.selectedVariant[prod.id] = prod.presentaciones[0].codigo;
+      }
+      state.quantities[prod.id] = 1;
+    });
+
+    (function initSellerFromUrl() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const v = (params.get("vendedor") || params.get("v") || "").trim();
+        if (!v) return;
+        const select = document.getElementById("sellerSelect");
+        const options = Array.from(select.options).map(o => o.value);
+        const matched = options.find(opt => opt.toLowerCase() === v.toLowerCase());
+        if (matched && matched !== "Otro") {
+          select.value = matched;
+        } else {
+          select.value = "Otro";
+          document.getElementById("customSellerField").style.display = "flex";
+          document.getElementById("customSellerName").value = v;
+        }
+      } catch (e) {}
+    })();
+
     const fmtCOP = (n) => "$" + Number(n || 0).toLocaleString("es-CO");
+    const roundToThousand = (n) => Math.round(n / 1000) * 1000;
+
+    function haversineKm(lat1, lon1, lat2, lon2) {
+      const R = 6371;
+      const toRad = (deg) => (deg * Math.PI) / 180;
+      const dLat = toRad(lat2 - lat1);
+      const dLon = toRad(lon2 - lon1);
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      return 2 * R * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    }
+
+    function getShippingEstimate(subtotal) {
+      let km = SECTOR_DISTANCES_KM[document.getElementById("sectorRefSelect").value] || 3.0;
+      if (typeof state.gpsKm === "number" && !Number.isNaN(state.gpsKm)) {
+        km = Math.max(1.0, Number((state.gpsKm * ROAD_FACTOR).toFixed(1)));
+      }
+      const rawFee = Math.max(6000, roundToThousand(km * RATE_PER_KM));
+
+      let discountFactor = 1;
+      let noteText = "Tarifa estimada (~$3.000/km), negociable según compra";
+      if (subtotal >= 500000) {
+        discountFactor = 0.0;
+        noteText = "¡Compra alta! Domicilio negociable hasta $0 (cortesía por volumen)";
+      } else if (subtotal >= 250000) {
+        discountFactor = 0.5;
+        noteText = "Por el valor de tu compra puedes negociar hasta 50% del domicilio";
+      } else if (subtotal >= 120000) {
+        discountFactor = 0.75;
+        noteText = "Monto elegible para descuento/negociación del domicilio";
+      }
+
+      const estimatedFee = roundToThousand(rawFee * discountFactor);
+      return {
+        km,
+        baseFee: rawFee,
+        estimatedFee,
+        noteText,
+        grandTotal: subtotal + estimatedFee
+      };
+    }
+
+    function updateShippingUI() {
+      const subtotal = getCartSubtotal();
+      const est = getShippingEstimate(subtotal);
+      document.getElementById("estKmText").textContent = `${est.km} km aprox.`;
+      document.getElementById("estShippingText").textContent =
+        subtotal === 0 ? "$0" : `${fmtCOP(est.estimatedFee)} (base ${fmtCOP(est.baseFee)})`;
+      document.getElementById("shippingNegotiationNote").textContent = est.noteText;
+      document.getElementById("modalGrandTotal").textContent = fmtCOP(subtotal === 0 ? 0 : est.grandTotal);
+    }
+
+    function requestGpsDistance() {
+      if (!navigator.geolocation) {
+        alert("Tu navegador no soporta ubicación GPS. Selecciona una referencia de sector.");
+        return;
+      }
+      const btn = document.getElementById("useGpsBtn");
+      btn.textContent = "Calculando...";
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const directKm = haversineKm(
+            DISPATCH_ORIGIN.lat,
+            DISPATCH_ORIGIN.lon,
+            pos.coords.latitude,
+            pos.coords.longitude
+          );
+          state.gpsKm = directKm;
+          btn.textContent = "📍 GPS aplicado";
+          updateShippingUI();
+        },
+        () => {
+          btn.textContent = "📍 Calcular con mi ubicación GPS";
+          alert("No se pudo obtener la ubicación GPS. Puedes elegir el sector aproximado.");
+        },
+        { enableHighAccuracy: true, timeout: 8000 }
+      );
+    }
+
+    function getBogotaDateTime() {
+      const now = new Date();
+      const parts = new Intl.DateTimeFormat("sv-SE", {
+        timeZone: BOGOTA_TZ,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false
+      }).formatToParts(now);
+      const map = {};
+      parts.forEach(p => { map[p.type] = p.value; });
+      const stamp = `${map.year}${map.month}${map.day}-${map.hour}${map.minute}${map.second}`;
+      const formatted = `${map.year}-${map.month}-${map.day} ${map.hour}:${map.minute}:${map.second} (GMT-5)`;
+      return { stamp, formatted };
+    }
 
     function fallbackSvg(code, name) {
       const safeCode = String(code || "").replace(/[<>&"]/g, "");
@@ -790,89 +1167,162 @@
     }
 
     function initCategories() {
-      const cats = ["Todos", ...new Set(CATALOGO_2026.map(i => i.categoria))];
-      const container = document.getElementById("catButtons");
-      container.innerHTML = cats.map(c =>
-        `<button class="cat-btn ${c === state.category ? "active" : ""}" data-cat="${c}">${c}</button>`
+      const cats = ["Todos", ...new Set(CATALOGO_AGRUPADO.map(i => i.categoria))];
+      const select = document.getElementById("categorySelect");
+      select.innerHTML = cats.map(c =>
+        `<option value="${c}" ${c === state.category ? "selected" : ""}>${c === "Todos" ? "Todas las categorías" : c}</option>`
       ).join("");
-      container.querySelectorAll(".cat-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-          state.category = btn.dataset.cat;
-          initCategories();
-          renderGrid();
-        });
+    }
+
+    function syncChipActive() {
+      document.querySelectorAll("#quickChips .chip-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.chip === state.category);
       });
+    }
+
+    function getStockBadgeClass(stockText) {
+      const s = (stockText || "").toLowerCase();
+      if (s.includes("agot")) return "stock-out";
+      if (s.includes("pocas")) return "stock-low";
+      return "stock-ok";
+    }
+
+    function getActivePresentation(prod) {
+      const activeCode = state.selectedVariant[prod.id];
+      return prod.presentaciones.find(p => p.codigo === activeCode) || prod.presentaciones[0];
     }
 
     function renderGrid() {
       const q = state.search.trim().toLowerCase();
-      const filtered = CATALOGO_2026.filter(item => {
-        const matchCat = state.category === "Todos" || item.categoria === state.category;
+      const filtered = CATALOGO_AGRUPADO.filter(prod => {
+        const matchCat = state.category === "Todos" || prod.categoria === state.category;
+        const matchPres = prod.presentaciones.some(p =>
+          p.codigo.toLowerCase().includes(q) || p.presentacion.toLowerCase().includes(q)
+        );
         const matchQ = !q ||
-          item.codigo.toLowerCase().includes(q) ||
-          item.nombre.toLowerCase().includes(q) ||
-          item.presentacion.toLowerCase().includes(q) ||
-          item.categoria.toLowerCase().includes(q);
+          prod.nombre.toLowerCase().includes(q) ||
+          prod.categoria.toLowerCase().includes(q) ||
+          matchPres;
         return matchCat && matchQ;
       });
 
-      document.getElementById("statsText").textContent =
-        `Mostrando ${filtered.length} de ${CATALOGO_2026.length} referencias`;
+      document.getElementById("statsText").textContent = "Pregunte por lo que no vea";
 
       const grid = document.getElementById("catalogGrid");
-      grid.innerHTML = filtered.map(item => {
-        const qty = state.quantities[item.codigo] || 1;
-        const safeName = item.nombre.replace(/'/g, "");
+      grid.innerHTML = filtered.map(prod => {
+        const active = getActivePresentation(prod);
+        const qty = state.quantities[prod.id] || 1;
+        const safeName = prod.nombre.replace(/'/g, "");
+        const imgCode = prod.imagen_codigo || active.codigo;
+        const stockLabel = prod.stock || "Disponible";
+        const isOut = stockLabel.toLowerCase().includes("agot");
+
+        const variantsHtml = prod.presentaciones.map(pres => {
+          const isSel = pres.codigo === active.codigo;
+          return `
+            <label class="variant-box ${isSel ? "selected" : ""}" onclick="selectVariant('${prod.id}', '${pres.codigo}')">
+              <span class="variant-left">
+                <input type="radio" name="var-${prod.id}" ${isSel ? "checked" : ""} />
+                <span class="variant-name">${pres.presentacion}</span>
+              </span>
+              <span class="variant-price">${fmtCOP(pres.precio_venta)}</span>
+            </label>
+          `;
+        }).join("");
+
         return `
-          <article class="card">
+          <article class="card" id="card-${prod.id}">
             <div class="img-wrap">
-              <span class="code-badge">${item.codigo}</span>
-              <img src="img/${item.codigo}.jpg" alt="${item.nombre}"
-                   onerror="this.onerror=null; this.src=fallbackSvg('${item.codigo}','${safeName}');" />
+              <span class="code-badge" id="badge-${prod.id}">${active.codigo}</span>
+              <span class="stock-badge ${getStockBadgeClass(stockLabel)}">${stockLabel}</span>
+              <img src="img/${imgCode}.jpg" alt="${prod.nombre}"
+                   onerror="this.onerror=null; this.src=fallbackSvg('${imgCode}','${safeName}');" />
             </div>
             <div class="card-body">
-              <div class="cat-label">${item.categoria}</div>
-              <div class="title">${item.nombre}</div>
-              <div class="pres">${item.presentacion}</div>
-              <div class="price">${fmtCOP(item.precio_venta)}</div>
+              <div class="cat-label">${prod.categoria}</div>
+              <div class="title">${prod.nombre}</div>
+              <div class="variants" id="vars-${prod.id}">${variantsHtml}</div>
+              <div class="selected-summary">
+                <span id="sel-label-${prod.id}">${active.presentacion}</span>
+                <span class="selected-price" id="sel-price-${prod.id}">${fmtCOP(active.precio_venta)}</span>
+              </div>
             </div>
             <div class="card-actions">
               <div class="qty-box">
-                <button class="qty-btn" onclick="changeQty('${item.codigo}', -1)">-</button>
-                <span class="qty-val" id="q-${item.codigo}">${qty}</span>
-                <button class="qty-btn" onclick="changeQty('${item.codigo}', 1)">+</button>
+                <button class="qty-btn" onclick="changeQty('${prod.id}', -1)" ${isOut ? "disabled" : ""}>-</button>
+                <span class="qty-val" id="q-${prod.id}">${qty}</span>
+                <button class="qty-btn" onclick="changeQty('${prod.id}', 1)" ${isOut ? "disabled" : ""}>+</button>
               </div>
-              <button class="add-btn" onclick="addToCart('${item.codigo}')">Agregar</button>
+              <button class="add-btn" onclick="addSelectedToCart('${prod.id}')" ${isOut ? "disabled" : ""}>${isOut ? "Agotado" : "Agregar"}</button>
             </div>
           </article>
         `;
       }).join("");
     }
 
-    function changeQty(code, delta) {
-      const cur = state.quantities[code] || 1;
+    function selectVariant(prodId, code) {
+      state.selectedVariant[prodId] = code;
+      const prod = CATALOGO_AGRUPADO.find(p => p.id === prodId);
+      if (!prod) return;
+      const active = getActivePresentation(prod);
+
+      const badge = document.getElementById("badge-" + prodId);
+      if (badge) badge.textContent = active.codigo;
+
+      const labelEl = document.getElementById("sel-label-" + prodId);
+      if (labelEl) labelEl.textContent = active.presentacion;
+
+      const priceEl = document.getElementById("sel-price-" + prodId);
+      if (priceEl) priceEl.textContent = fmtCOP(active.precio_venta);
+
+      const varsContainer = document.getElementById("vars-" + prodId);
+      if (varsContainer) {
+        varsContainer.querySelectorAll(".variant-box").forEach((box, idx) => {
+          const pres = prod.presentaciones[idx];
+          const checked = pres && pres.codigo === active.codigo;
+          box.classList.toggle("selected", checked);
+          const radio = box.querySelector("input[type='radio']");
+          if (radio) radio.checked = checked;
+        });
+      }
+    }
+
+    function changeQty(prodId, delta) {
+      const cur = state.quantities[prodId] || 1;
       const next = Math.max(1, cur + delta);
-      state.quantities[code] = next;
-      const el = document.getElementById("q-" + code);
+      state.quantities[prodId] = next;
+      const el = document.getElementById("q-" + prodId);
       if (el) el.textContent = next;
     }
 
-    function addToCart(code) {
-      const item = CATALOGO_2026.find(x => x.codigo === code);
-      if (!item) return;
-      const addQty = state.quantities[code] || 1;
-      state.cart[code] = (state.cart[code] || 0) + addQty;
-      state.quantities[code] = 1;
-      const el = document.getElementById("q-" + code);
+    function addSelectedToCart(prodId) {
+      const prod = CATALOGO_AGRUPADO.find(p => p.id === prodId);
+      if (!prod) return;
+      const active = getActivePresentation(prod);
+      const addQty = state.quantities[prodId] || 1;
+      state.cart[active.codigo] = (state.cart[active.codigo] || 0) + addQty;
+      state.quantities[prodId] = 1;
+      const el = document.getElementById("q-" + prodId);
       if (el) el.textContent = 1;
       updateCartBar();
+    }
+
+    function getCartSubtotal() {
+      let total = 0;
+      for (const [code, qty] of Object.entries(state.cart)) {
+        const item = CATALOGO_PLANO.find(x => x.codigo === code);
+        if (item && qty > 0) {
+          total += item.precio_venta * qty;
+        }
+      }
+      return total;
     }
 
     function updateCartBar() {
       let count = 0;
       let total = 0;
       for (const [code, qty] of Object.entries(state.cart)) {
-        const item = CATALOGO_2026.find(x => x.codigo === code);
+        const item = CATALOGO_PLANO.find(x => x.codigo === code);
         if (item && qty > 0) {
           count += qty;
           total += item.precio_venta * qty;
@@ -881,6 +1331,24 @@
       document.getElementById("cartSummary").textContent = `${count} unidad(es)`;
       document.getElementById("cartTotal").textContent = fmtCOP(total);
       document.getElementById("modalTotal").textContent = fmtCOP(total);
+      updateShippingUI();
+    }
+
+    function adjustCartQty(code, delta) {
+      const next = (state.cart[code] || 0) + delta;
+      if (next <= 0) {
+        delete state.cart[code];
+      } else {
+        state.cart[code] = next;
+      }
+      updateCartBar();
+      renderCartModal();
+    }
+
+    function clearCart() {
+      state.cart = {};
+      updateCartBar();
+      renderCartModal();
     }
 
     function renderCartModal() {
@@ -888,24 +1356,29 @@
       const entries = Object.entries(state.cart).filter(([, q]) => q > 0);
       if (!entries.length) {
         list.innerHTML = `<p style="color:var(--muted);">Tu pedido está vacío.</p>`;
+        updateShippingUI();
         return;
       }
       list.innerHTML = entries.map(([code, qty]) => {
-        const item = CATALOGO_2026.find(x => x.codigo === code);
+        const item = CATALOGO_PLANO.find(x => x.codigo === code);
         const sub = item.precio_venta * qty;
         return `
           <div class="cart-item">
             <div>
-              <strong>${item.codigo}</strong> · ${item.nombre}<br/>
+              <strong>${item.codigo}</strong> · ${item.nombre} (${item.presentacion})<br/>
               <small style="color:var(--muted);">${qty} x ${fmtCOP(item.precio_venta)}</small>
             </div>
-            <div style="display:flex; align-items:center; gap:8px;">
-              <strong>${fmtCOP(sub)}</strong>
-              <button class="qty-btn" onclick="removeItem('${code}')">✕</button>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <button class="qty-btn" type="button" onclick="adjustCartQty('${code}', -1)">-</button>
+              <span class="qty-val">${qty}</span>
+              <button class="qty-btn" type="button" onclick="adjustCartQty('${code}', 1)">+</button>
+              <strong style="min-width:68px; text-align:right;">${fmtCOP(sub)}</strong>
+              <button class="qty-btn" type="button" onclick="removeItem('${code}')">✕</button>
             </div>
           </div>
         `;
       }).join("");
+      updateShippingUI();
     }
 
     function removeItem(code) {
@@ -914,53 +1387,244 @@
       renderCartModal();
     }
 
-    function sendWhatsApp() {
+    function openCartModal() {
       const entries = Object.entries(state.cart).filter(([, q]) => q > 0);
       if (!entries.length) {
         alert("Agrega al menos un producto al pedido.");
         return;
       }
-      const name = document.getElementById("clientName").value.trim() || "Cliente";
+      renderCartModal();
+      document.getElementById("syncStatus").textContent = "";
+      document.getElementById("cartModal").classList.add("open");
+    }
+
+    function generarIdOrden(stamp) {
+      const rand = Math.floor(100 + Math.random() * 900);
+      return `PB-${stamp}-${rand}`;
+    }
+
+    function toggleCustomSellerField() {
+      const sellerChoice = document.getElementById("sellerSelect").value;
+      const customField = document.getElementById("customSellerField");
+      customField.style.display = sellerChoice === "Otro" ? "flex" : "none";
+      if (sellerChoice !== "Otro") {
+        document.getElementById("customSellerName").value = "";
+      }
+    }
+
+    function buildOrderDetails(orderId, bogotaTime) {
+      const entries = Object.entries(state.cart).filter(([, q]) => q > 0);
+      const sellerChoice = document.getElementById("sellerSelect").value;
+      const customSeller = document.getElementById("customSellerName").value.trim();
+      const seller = sellerChoice === "Otro" ? customSeller : sellerChoice;
+
+      const name = document.getElementById("clientName").value.trim();
+      const phone = document.getElementById("clientPhone").value.trim();
       const zone = document.getElementById("clientZone").value;
+      const neighborhood = document.getElementById("clientNeighborhood").value.trim();
+      const address = document.getElementById("clientAddress").value.trim();
+      const deliveryMode = "Domicilio";
+      const paymentMethod = document.getElementById("paymentMethod").value;
       const note = document.getElementById("clientNote").value.trim();
 
-      let total = 0;
+      let subtotal = 0;
+      const items = [];
+      const resumenArr = [];
+
+      for (const [code, qty] of entries) {
+        const item = CATALOGO_PLANO.find(x => x.codigo === code);
+        const sub = item.precio_venta * qty;
+        subtotal += sub;
+        items.push({
+          codigo: item.codigo,
+          producto: item.nombre,
+          presentacion: item.presentacion,
+          cantidad: qty,
+          precio: item.precio_venta,
+          subtotal: sub
+        });
+        resumenArr.push(`${qty}x ${item.nombre} [${item.presentacion}] (${fmtCOP(sub)})`);
+      }
+
+      const ship = getShippingEstimate(subtotal);
+      const fullLocation = `Barrio ${neighborhood} - ${address}`;
+
+      const payload = {
+        id_orden: orderId,
+        fecha_hora: bogotaTime.formatted,
+        fecha_hora_bogota: bogotaTime.formatted,
+        zona_horaria: "GMT-5 (America/Bogota)",
+        vendedor: seller,
+        nombre_cliente: name,
+        telefono: phone,
+        ciudad_zona: zone,
+        barrio: neighborhood,
+        direccion: address,
+        barrio_direccion: fullLocation,
+        modalidad_entrega: deliveryMode,
+        distancia_estimada_km: ship.km,
+        domicilio_estimado: ship.estimatedFee,
+        domicilio_negociable: true,
+        metodo_pago: paymentMethod,
+        detalle_productos: resumenArr.join(", "),
+        subtotal_productos: subtotal,
+        total_orden: ship.grandTotal,
+        items: items,
+        notas: note,
+        estado: "Pendiente"
+      };
+
       const lines = [
-        "*PEDIDO PIROTECNIA BARRANQUILLA 2026*",
+        `*PEDIDO PIROTECNIA BARRANQUILLA 2026*`,
+        `Orden: *${orderId}*`,
+        `Fecha/Hora (GMT-5): ${bogotaTime.formatted}`,
+        `Vendedor: *${seller}*`,
         `Cliente: ${name}`,
-        `Zona: ${zone}`,
+        `Tel: ${phone}`,
+        `Ciudad: ${zone}`,
+        `Barrio: ${neighborhood}`,
+        `Dirección: ${address}`,
+        `Entrega: Solo a domicilio | Pago: ${paymentMethod}`,
         note ? `Nota: ${note}` : null,
         "--------------------------------"
       ].filter(Boolean);
 
-      for (const [code, qty] of entries) {
-        const item = CATALOGO_2026.find(x => x.codigo === code);
-        const sub = item.precio_venta * qty;
-        total += sub;
-        lines.push(`• [${item.codigo}] ${item.nombre} (${item.presentacion}) x${qty} = ${fmtCOP(sub)}`);
+      for (const it of items) {
+        lines.push(`• [${it.codigo}] ${it.producto} (${it.presentacion}) x${it.cantidad} = ${fmtCOP(it.subtotal)}`);
       }
       lines.push("--------------------------------");
-      lines.push(`*TOTAL ESTIMADO: ${fmtCOP(total)}*`);
+      lines.push(`*SUBTOTAL PRODUCTOS: ${fmtCOP(subtotal)}*`);
+      lines.push(`*DOMICILIO ESTIMADO (~$3.000/km · ${ship.km} km aprox.): ${fmtCOP(ship.estimatedFee)}*`);
+      lines.push(`*TOTAL ESTIMADO: ${fmtCOP(ship.grandTotal)}*`);
+      lines.push(`🚚 _Nota: Entrega solo a domicilio. El valor del domicilio es aproximado (~$3.000/km) y es negociable según el valor de tu compra. Para despachar se requiere como mínimo el valor del domicilio pago._`);
 
-      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join("\n"))}`;
-      window.open(url, "_blank");
+      return { payload, messageText: lines.join("\n") };
+    }
+
+    function validateFormFields() {
+      const entries = Object.entries(state.cart).filter(([, q]) => q > 0);
+      if (!entries.length) {
+        alert("Agrega al menos un producto al pedido.");
+        return false;
+      }
+
+      const sellerChoice = document.getElementById("sellerSelect").value;
+      const customSeller = document.getElementById("customSellerName").value.trim();
+      const seller = sellerChoice === "Otro" ? customSeller : sellerChoice;
+      const name = document.getElementById("clientName").value.trim();
+      const phone = document.getElementById("clientPhone").value.trim();
+      const neighborhood = document.getElementById("clientNeighborhood").value.trim();
+      const address = document.getElementById("clientAddress").value.trim();
+
+      if (!seller) {
+        alert("Por favor selecciona o especifica el nombre del vendedor.");
+        if (sellerChoice === "Otro") document.getElementById("customSellerName").focus();
+        else document.getElementById("sellerSelect").focus();
+        return false;
+      }
+      if (!name) {
+        alert("Por favor ingresa tu nombre completo.");
+        document.getElementById("clientName").focus();
+        return false;
+      }
+      if (!phone) {
+        alert("Por favor ingresa tu teléfono o WhatsApp.");
+        document.getElementById("clientPhone").focus();
+        return false;
+      }
+      if (!neighborhood) {
+        alert("Por favor ingresa el barrio para el domicilio.");
+        document.getElementById("clientNeighborhood").focus();
+        return false;
+      }
+      if (!address) {
+        alert("Por favor ingresa la dirección exacta para el domicilio.");
+        document.getElementById("clientAddress").focus();
+        return false;
+      }
+      return true;
+    }
+
+    async function copyOrderSummary() {
+      if (!validateFormFields()) return;
+      const bogotaTime = getBogotaDateTime();
+      const orderId = generarIdOrden(bogotaTime.stamp);
+      const { messageText } = buildOrderDetails(orderId, bogotaTime);
+      const statusEl = document.getElementById("syncStatus");
+
+      try {
+        await navigator.clipboard.writeText(messageText);
+        statusEl.textContent = `Resumen copiado al portapapeles (Orden ${orderId}).`;
+      } catch (e) {
+        statusEl.textContent = `Orden ${orderId} lista para copiar.`;
+      }
+    }
+
+    async function submitOrder() {
+      if (!validateFormFields()) return;
+
+      const btn = document.getElementById("modalSendBtn");
+      const statusEl = document.getElementById("syncStatus");
+      btn.disabled = true;
+      statusEl.textContent = "Registrando pedido en el sistema...";
+
+      const bogotaTime = getBogotaDateTime();
+      const orderId = generarIdOrden(bogotaTime.stamp);
+      const { payload, messageText } = buildOrderDetails(orderId, bogotaTime);
+
+      try {
+        await fetch(APPS_SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload)
+        });
+        statusEl.textContent = "Pedido registrado (" + orderId + "). Abriendo WhatsApp...";
+      } catch (err) {
+        statusEl.textContent = "Redirigiendo a WhatsApp...";
+      }
+
+      const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(messageText)}`;
+      btn.disabled = false;
+      window.open(waUrl, "_blank");
     }
 
     document.getElementById("searchInput").addEventListener("input", (e) => {
       state.search = e.target.value;
       renderGrid();
     });
-    document.getElementById("openCartBtn").addEventListener("click", () => {
-      renderCartModal();
-      document.getElementById("cartModal").classList.add("open");
+    document.getElementById("categorySelect").addEventListener("change", (e) => {
+      state.category = e.target.value;
+      syncChipActive();
+      renderGrid();
     });
+    document.querySelectorAll("#quickChips .chip-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        state.category = btn.dataset.chip;
+        document.getElementById("categorySelect").value = state.category;
+        syncChipActive();
+        renderGrid();
+      });
+    });
+    document.getElementById("sectorRefSelect").addEventListener("change", () => {
+      state.gpsKm = null;
+      document.getElementById("useGpsBtn").textContent = "📍 Calcular con mi ubicación GPS";
+      updateShippingUI();
+    });
+    document.getElementById("useGpsBtn").addEventListener("click", requestGpsDistance);
+    document.getElementById("sellerSelect").addEventListener("change", toggleCustomSellerField);
+    document.getElementById("openCartBtn").addEventListener("click", openCartModal);
+    document.getElementById("sendWaBtn").addEventListener("click", openCartModal);
+    document.getElementById("clearCartBtn").addEventListener("click", clearCart);
+    document.getElementById("copySummaryBtn").addEventListener("click", copyOrderSummary);
     document.getElementById("closeModalBtn").addEventListener("click", () => {
       document.getElementById("cartModal").classList.remove("open");
     });
-    document.getElementById("sendWaBtn").addEventListener("click", sendWhatsApp);
-    document.getElementById("modalSendBtn").addEventListener("click", sendWhatsApp);
+    document.getElementById("modalSendBtn").addEventListener("click", submitOrder);
 
     initCategories();
+    syncChipActive();
+    toggleCustomSellerField();
     renderGrid();
     updateCartBar();
   </script>
