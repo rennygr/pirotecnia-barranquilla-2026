@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Pirotecnia Barranquilla 2026 | v10.0 | 2026-11-25 | Catálogo reconstruido desde Sheet maestro + precios en vivo via doGet + doPost corregido 18 columnas -->
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -6,20 +7,17 @@
   <title>Pirotecnia Barranquilla 2026 | Catálogo Oficial</title>
   <style>
     :root {
-      --bg: #f9f9f9;
-      --panel: #ffffff;
-      --panel-2: #f4f4f4;
-      --text: #0a0a0a;
-      --muted: #555555;
-      --accent: #000000;
-      --accent-2: #b8860b;
-      --gold-bright: #d4af37;
-      --gold-dark: #b8860b;
-      --gold-light: #fdf8ec;
-      --border: #d4af37;
-      --ok: #15803d;
-      --warn: #b45309;
-      --danger: #b91c1c;
+      --bg: #0c0f14;
+      --panel: #151a22;
+      --panel-2: #1c232e;
+      --text: #f3f5f8;
+      --muted: #9aa5b4;
+      --accent: #ff5a1f;
+      --accent-2: #ffb703;
+      --border: #2a3342;
+      --ok: #22c55e;
+      --warn: #f59e0b;
+      --danger: #ef4444;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -30,14 +28,12 @@
       padding-bottom: 98px;
     }
     header {
-      background: #000000;
-      color: #ffffff;
-      border-bottom: 4px solid var(--gold-bright);
+      background: linear-gradient(135deg, #1a1210 0%, #121722 100%);
+      border-bottom: 1px solid var(--border);
       padding: 18px 20px;
       position: sticky;
       top: 0;
       z-index: 20;
-      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
     }
     .header-inner {
       max-width: 1240px;
@@ -49,8 +45,8 @@
       justify-content: space-between;
     }
     h1 { font-size: 1.35rem; font-weight: 800; }
-    h1 span { color: var(--gold-bright); }
-    .sub { font-size: 0.85rem; color: #d4d4d8; }
+    h1 span { color: var(--accent-2); }
+    .sub { font-size: 0.85rem; color: var(--muted); }
     .controls {
       max-width: 1240px;
       margin: 16px auto 0;
@@ -64,31 +60,22 @@
     .search-input {
       flex: 1 1 280px;
       background: var(--panel);
-      border: 2px solid #e0e0e0;
+      border: 1px solid var(--border);
       color: var(--text);
       padding: 10px 14px;
       border-radius: 8px;
       font-size: 0.95rem;
     }
-    .search-input:focus {
-      border-color: var(--gold-bright);
-      outline: none;
-      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.18);
-    }
     .cat-select {
       min-width: 240px;
       flex: 0 1 300px;
       background: var(--panel);
-      border: 2px solid #e0e0e0;
+      border: 1px solid var(--border);
       color: var(--text);
       padding: 10px 14px;
       border-radius: 8px;
       font-size: 0.92rem;
       cursor: pointer;
-    }
-    .cat-select:focus {
-      border-color: var(--gold-bright);
-      outline: none;
     }
     .quick-chips {
       max-width: 1240px;
@@ -100,20 +87,19 @@
     }
     .chip-btn {
       background: var(--panel);
-      border: 2px solid #d0d0d0;
+      border: 1px solid var(--border);
       color: var(--muted);
-      padding: 6px 14px;
+      padding: 6px 12px;
       border-radius: 999px;
       font-size: 0.8rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.18s ease;
+      transition: all 0.15s ease;
     }
     .chip-btn.active, .chip-btn:hover {
-      border-color: var(--gold-bright);
-      color: var(--gold-bright);
-      background: #000000;
-      box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
+      border-color: var(--accent-2);
+      color: var(--text);
+      background: var(--panel-2);
     }
     .grid {
       max-width: 1240px;
@@ -125,26 +111,18 @@
     }
     .card {
       background: var(--panel);
-      border: 2px solid #e0e0e0;
+      border: 1px solid var(--border);
       border-radius: 12px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
-      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
-    }
-    .card:hover {
-      border-color: var(--gold-bright);
-      box-shadow: 0 8px 24px rgba(212, 175, 55, 0.18);
-      transform: translateY(-2px);
     }
     .img-wrap {
       aspect-ratio: 4 / 3;
-      background: #f0f0f0;
+      background: #10141b;
       position: relative;
       overflow: hidden;
-      border-bottom: 2px solid #e0e0e0;
     }
     .img-wrap img {
       width: 100%;
@@ -156,14 +134,13 @@
       position: absolute;
       top: 8px;
       left: 8px;
-      background: #000000;
-      border: 2px solid var(--gold-bright);
-      color: var(--gold-bright);
+      background: rgba(12, 15, 20, 0.88);
+      border: 1px solid var(--border);
+      color: var(--accent-2);
       font-size: 0.74rem;
       font-weight: 700;
-      padding: 3px 10px;
+      padding: 2px 7px;
       border-radius: 6px;
-      letter-spacing: 0.03em;
     }
     .stock-badge {
       position: absolute;
@@ -171,11 +148,10 @@
       right: 8px;
       font-size: 0.7rem;
       font-weight: 700;
-      padding: 2px 8px;
+      padding: 2px 7px;
       border-radius: 6px;
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(12, 15, 20, 0.9);
       border: 1px solid var(--border);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
     }
     .stock-ok { color: var(--ok); border-color: rgba(34, 197, 94, 0.4); }
     .stock-low { color: var(--warn); border-color: rgba(245, 158, 11, 0.45); }
@@ -191,16 +167,15 @@
       gap: 8px;
       padding: 8px 10px;
       border-radius: 8px;
-      border: 1.5px solid #d0d0d0;
+      border: 1px solid var(--border);
       background: var(--panel-2);
       cursor: pointer;
       transition: border-color 0.15s ease, background 0.15s ease;
       font-size: 0.82rem;
     }
     .variant-box.selected {
-      border-color: var(--gold-bright);
-      background: var(--gold-light);
-      box-shadow: inset 0 0 0 1.5px var(--gold-bright);
+      border-color: var(--accent-2);
+      background: #242d3d;
     }
     .variant-left { display: flex; align-items: center; gap: 8px; }
     .variant-box input[type="radio"] { accent-color: var(--accent); cursor: pointer; }
@@ -235,37 +210,27 @@
     .qty-val { min-width: 24px; text-align: center; font-weight: 700; }
     .add-btn {
       flex: 1;
-      background: #000000;
-      color: var(--gold-bright);
-      border: 2px solid var(--gold-bright);
-      padding: 9px 14px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
       border-radius: 8px;
       font-weight: 700;
       font-size: 0.85rem;
       cursor: pointer;
-      transition: background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
-      letter-spacing: 0.02em;
-    }
-    .add-btn:hover:not(:disabled) {
-      background: var(--gold-bright);
-      color: #000000;
-      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
     }
     .add-btn:disabled {
-      background: #333333;
-      color: #777777;
-      border-color: #555555;
+      background: #374151;
+      color: #9ca3af;
       cursor: not-allowed;
     }
     .cart-bar {
       position: fixed;
       bottom: 0; left: 0; right: 0;
-      background: #000000;
-      border-top: 3px solid var(--gold-bright);
-      padding: 14px 20px;
+      background: var(--panel-2);
+      border-top: 1px solid var(--border);
+      padding: 12px 20px;
       z-index: 30;
-      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.25);
-      color: #ffffff;
     }
     .cart-inner {
       max-width: 1240px;
@@ -277,35 +242,26 @@
       justify-content: space-between;
     }
     .wa-btn {
-      background: var(--gold-bright);
-      color: #000000;
+      background: #16a34a;
+      color: #fff;
       border: none;
       padding: 10px 18px;
       border-radius: 8px;
       font-weight: 700;
       cursor: pointer;
-      transition: background 0.15s ease, box-shadow 0.15s ease;
-    }
-    .wa-btn:hover:not(:disabled) {
-      background: #e6c547;
-      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.35);
     }
     .wa-btn:disabled {
-      opacity: 0.55;
+      opacity: 0.65;
       cursor: not-allowed;
     }
     .sec-btn {
       background: transparent;
-      color: #ffffff;
-      border: 1.5px solid var(--gold-bright);
+      color: var(--text);
+      border: 1px solid var(--border);
       padding: 10px 14px;
       border-radius: 8px;
       font-weight: 600;
       cursor: pointer;
-      transition: background 0.15s ease;
-    }
-    .sec-btn:hover {
-      background: rgba(212, 175, 55, 0.12);
     }
     .modal-backdrop {
       position: fixed; inset: 0;
@@ -319,14 +275,13 @@
     .modal-backdrop.open { display: flex; }
     .modal {
       background: var(--panel);
-      border: 2px solid var(--gold-bright);
+      border: 1px solid var(--border);
       border-radius: 12px;
       max-width: 590px;
       width: 100%;
       max-height: 90vh;
       overflow-y: auto;
       padding: 20px;
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
     }
     .cart-item {
       display: flex;
@@ -339,15 +294,15 @@
     }
     .delivery-notice {
       margin-top: 14px;
-      padding: 12px 14px;
+      padding: 11px 13px;
       border-radius: 8px;
-      background: #000000;
-      border: 2px solid var(--gold-bright);
-      color: #ffffff;
+      background: rgba(255, 183, 3, 0.1);
+      border: 1px solid rgba(255, 183, 3, 0.45);
+      color: #fde68a;
       font-size: 0.82rem;
       line-height: 1.45;
     }
-    .delivery-notice strong { color: var(--gold-bright); }
+    .delivery-notice strong { color: var(--accent-2); }
     .shipping-calc-box {
       margin-top: 12px;
       padding: 12px 14px;
@@ -370,18 +325,14 @@
       font-weight: 800;
     }
     .mini-btn {
-      background: #000000;
-      border: 1.5px solid var(--gold-bright);
-      color: var(--gold-bright);
+      background: var(--panel);
+      border: 1px solid var(--border);
+      color: var(--accent-2);
       padding: 6px 10px;
       border-radius: 6px;
       font-size: 0.78rem;
       font-weight: 700;
       cursor: pointer;
-      transition: background 0.15s ease;
-    }
-    .mini-btn:hover {
-      background: #1a1a1a;
     }
     .field { margin-top: 12px; display: flex; flex-direction: column; gap: 4px; }
     .field label { font-size: 0.82rem; color: var(--muted); }
@@ -415,116 +366,6 @@
       align-items: center;
       gap: 10px;
     }
-    .modal .sec-btn {
-      color: #000000;
-      border-color: #000000;
-    }
-    .modal .sec-btn:hover {
-      background: rgba(0, 0, 0, 0.06);
-    }
-    .modal .wa-btn {
-      background: #000000;
-      color: var(--gold-bright);
-      border: 2px solid var(--gold-bright);
-    }
-    .modal .wa-btn:hover:not(:disabled) {
-      background: var(--gold-bright);
-      color: #000000;
-    }
-
-    /* ── Product Detail Popup ─────────────────────── */
-    .product-popup-overlay {
-      display: none;
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.75);
-      z-index: 10000;
-      justify-content: center;
-      align-items: center;
-      padding: 16px;
-      animation: fadeInOverlay 0.2s ease;
-    }
-    .product-popup-overlay.active { display: flex; }
-    @keyframes fadeInOverlay { from { opacity: 0; } to { opacity: 1; } }
-    .product-popup {
-      background: #ffffff;
-      border-radius: 16px;
-      max-width: 520px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-      border: 2px solid var(--gold-bright);
-      animation: popupSlideUp 0.25s ease;
-    }
-    @keyframes popupSlideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    .product-popup-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 16px;
-      background: #000000;
-      border-radius: 14px 14px 0 0;
-      border-bottom: 2px solid var(--gold-bright);
-    }
-    .product-popup-header h3 {
-      margin: 0;
-      color: var(--gold-bright);
-      font-size: 1.05rem;
-      font-weight: 700;
-    }
-    .product-popup-close {
-      background: none;
-      border: 2px solid var(--gold-bright);
-      color: var(--gold-bright);
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      font-size: 1.2rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
-    }
-    .product-popup-close:hover {
-      background: var(--gold-bright);
-      color: #000000;
-    }
-    .product-popup-img {
-      width: 100%;
-      max-height: 380px;
-      object-fit: contain;
-      background: #f4f4f4;
-      display: block;
-    }
-    .product-popup-body {
-      padding: 16px 20px 20px;
-    }
-    .product-popup-cat {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--gold-dark);
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-    .product-popup-desc {
-      font-size: 0.95rem;
-      line-height: 1.55;
-      color: #333;
-      margin-top: 8px;
-    }
-    .product-popup-code {
-      display: inline-block;
-      margin-top: 10px;
-      background: #000;
-      color: var(--gold-bright);
-      border: 1px solid var(--gold-bright);
-      padding: 2px 10px;
-      border-radius: 999px;
-      font-size: 0.75rem;
-      font-weight: 700;
-    }
-    .img-wrap { cursor: pointer; }
   </style>
 </head>
 <body>
@@ -548,7 +389,7 @@
     <button class="chip-btn" data-chip="Combos Promocionales 2026">Combos 2026</button>
     <button class="chip-btn" data-chip="Tortas & Espectáculos Aéreos">Tortas & Aéreo</button>
     <button class="chip-btn" data-chip="Volcanes & Fuentes">Volcanes & Fuentes</button>
-    <button class="chip-btn" data-chip="Golpes, Estallidos & Metralletas">Golpes & Metralletas</button>
+    <button class="chip-btn" data-chip="Golpes & Estallidos">Golpes & Estallidos</button>
   </div>
 
   <main class="grid" id="catalogGrid"></main>
@@ -556,7 +397,7 @@
   <div class="cart-bar">
     <div class="cart-inner">
       <div>
-        <strong id="cartSummary" style="color:var(--gold-bright);">0 unidades</strong> · Productos: <strong id="cartTotal" style="color: var(--gold-bright);">$0</strong> <span style="font-size:0.76rem; color:#aaaaaa; display:block;">Domicilio desde $1.500/km (varía según cantidad de compra)</span>
+        <strong id="cartSummary">0 unidades</strong> · Productos: <strong id="cartTotal" style="color: var(--ok);">$0</strong>
       </div>
       <div style="display:flex; gap:10px;">
         <button class="sec-btn" id="openCartBtn">Ver pedido</button>
@@ -579,8 +420,8 @@
 
       <div class="delivery-notice">
         🚚 <strong>Entregas exclusivamente a domicilio:</strong><br/>
-        • El envío se calcula de forma aproximada a <strong>$1.500 por kilómetro</strong> según la distancia de entrega.<br/>
-        • <strong>Importante:</strong> el valor del domicilio <strong>puede variar dependiendo de la cantidad y el valor total de tu compra</strong> (a mayor cantidad de productos, podemos aplicar descuentos o tarifa preferencial).<br/>
+        • El envío se calcula de forma aproximada a <strong>$3.000 por kilómetro</strong> según la distancia de entrega.<br/>
+        • <strong>¡Es negociable según el valor de tu compra!</strong> Entre mayor sea tu pedido, podemos ajustar o negociar el valor del domicilio.<br/>
         • <strong>Requisito para despachar:</strong> para enviar tu orden debes tener <strong>pago como mínimo el valor del domicilio</strong>. El saldo del pedido puedes pagarlo al recibir o por transferencia.
       </div>
 
@@ -650,16 +491,16 @@
 
       <div class="shipping-calc-box" id="shippingCalcBox">
         <div style="display:flex; justify-content:space-between; align-items:center;">
-          <strong>Cálculo aproximado de domicilio ($1.500/km)</strong>
-          <span style="font-size:0.75rem; color:var(--accent-2);">Varía según cantidad de compra</span>
+          <strong>Cálculo aproximado de domicilio ($3.000/km)</strong>
+          <span style="font-size:0.75rem; color:var(--accent-2);">Negociable según compra</span>
         </div>
         <div class="shipping-calc-row">
           <span style="color:var(--muted);">Distancia estimada:</span>
           <strong id="estKmText">2.5 km</strong>
         </div>
         <div class="shipping-calc-row">
-          <span style="color:var(--muted);">Domicilio estimado (~$1.500/km):</span>
-          <strong id="estShippingText" style="color:var(--accent-2);">$4.000</strong>
+          <span style="color:var(--muted);">Domicilio estimado (~$3.000/km):</span>
+          <strong id="estShippingText" style="color:var(--accent-2);">$8.000</strong>
         </div>
         <div class="shipping-calc-row">
           <span style="color:var(--muted);">Sugerencia por valor de compra:</span>
@@ -701,21 +542,14 @@
     </div>
   </div>
 
-  <!-- =====================================================
-       v4.0 — Catálogo externo (Hallazgo 3 Auditoría)
-       Orden de carga: precios → catálogo → lógica principal
-       ===================================================== -->
-  <script src="precios_2026.js"></script>
-  <script src="catalogo_2026.js"></script>
-
   <script>
-    // ========== CONSTANTES ==========
     const WHATSAPP_NUMBER = "573046720294";
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_uXFu419i_NbP8-a6axqp9cveqcJsaeariXRRwsY-LFbLE3RuLPvh8HAAR8XOEseB/exec";
     const BOGOTA_TZ = "America/Bogota";
 
+    // Internal dispatch origin coordinates (not exposed in UI or order messages)
     const DISPATCH_ORIGIN = { lat: 10.9282, lon: -74.7654 };
-    const RATE_PER_KM = 1500;
+    const RATE_PER_KM = 3000;
     const ROAD_FACTOR = 1.28;
 
     const SECTOR_DISTANCES_KM = {
@@ -727,11 +561,346 @@
       buenavista: 16.5
     };
 
-    // ========== LOCALSTORAGE KEYS (Hallazgo 4 Auditoría) ==========
-    const LS_CART_KEY = "pb2026_cart";
-    const LS_CLIENT_KEY = "pb2026_client";
+    const CATALOGO_AGRUPADO = [
+      // ═══════════════ VOLCANES & FUENTES ═══════════════
+      {
+        "id": "PROD-001", "categoria": "Volcanes & Fuentes", "nombre": "Volcancito",
+        "imagen_codigo": "POL-001", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-001", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 1400 },
+          { "codigo": "POL-002", "presentacion": "Media Docena (x6)", "costo_base": 0, "precio_venta": 8000 },
+          { "codigo": "POL-003", "presentacion": "Pack x10", "costo_base": 0, "precio_venta": 13500 }
+        ]
+      },
+      {
+        "id": "PROD-002", "categoria": "Volcanes & Fuentes", "nombre": "Volcán Grande",
+        "imagen_codigo": "POL-001", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-004", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 7000 },
+          { "codigo": "POL-005", "presentacion": "Media Docena (x6)", "costo_base": 0, "precio_venta": 38500 },
+          { "codigo": "POL-006", "presentacion": "Docena (x12)", "costo_base": 0, "precio_venta": 77000 }
+        ]
+      },
+      {
+        "id": "PROD-003", "categoria": "Volcanes & Fuentes", "nombre": "Fuente Cuco Pequeña",
+        "imagen_codigo": "POL-007", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-007", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 5000 }
+        ]
+      },
+      {
+        "id": "PROD-004", "categoria": "Volcanes & Fuentes", "nombre": "Fuente Cuco Grande",
+        "imagen_codigo": "POL-008", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-008", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 9000 }
+        ]
+      },
+      {
+        "id": "PROD-005", "categoria": "Volcanes & Fuentes", "nombre": "Fuente Festival / Triangular",
+        "imagen_codigo": "POL-009", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-009", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 75000 }
+        ]
+      },
+      // ═══════════════ LUCES, BENGALAS & HUMOS ═══════════════
+      {
+        "id": "PROD-006", "categoria": "Luces, Bengalas & Humos", "nombre": "Chispitas Mariposas",
+        "imagen_codigo": "POL-001", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-010", "presentacion": "Pack x6 Cajitas", "costo_base": 0, "precio_venta": 11000 },
+          { "codigo": "POL-011", "presentacion": "Caja x12 Cajitas", "costo_base": 0, "precio_venta": 22000 }
+        ]
+      },
+      {
+        "id": "PROD-007", "categoria": "Luces, Bengalas & Humos", "nombre": "Bengala de Humo / Humo de Colores",
+        "imagen_codigo": "POL-001", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-012", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 25000 }
+        ]
+      },
+      // ═══════════════ EFECTOS GIRATORIOS & PISO ═══════════════
+      {
+        "id": "PROD-008", "categoria": "Efectos Giratorios & Piso", "nombre": "Rosa Cracker (Rosita)",
+        "imagen_codigo": "POL-014", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-014", "presentacion": "Pack x6", "costo_base": 0, "precio_venta": 7000 },
+          { "codigo": "POL-015", "presentacion": "Media Docena Packs (x36)", "costo_base": 0, "precio_venta": 42000 },
+          { "codigo": "POL-016", "presentacion": "Caja x72", "costo_base": 0, "precio_venta": 60000 }
+        ]
+      },
+      {
+        "id": "PROD-009", "categoria": "Efectos Giratorios & Piso", "nombre": "Crackel Barrel (Barrilito)",
+        "imagen_codigo": "POL-001", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-017", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 8000 },
+          { "codigo": "POL-018", "presentacion": "Caja x6", "costo_base": 0, "precio_venta": 42000 }
+        ]
+      },
+      {
+        "id": "PROD-010", "categoria": "Efectos Giratorios & Piso", "nombre": "Helicóptero",
+        "imagen_codigo": "POL-001", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-019", "presentacion": "Pack x6 Unidades", "costo_base": 0, "precio_venta": 25000 }
+        ]
+      },
+      // ═══════════════ VARAS, COHETES & LANZADORES ═══════════════
+      {
+        "id": "PROD-011", "categoria": "Varas, Cohetes & Lanzadores", "nombre": "Vara Soplona 30 Luces",
+        "imagen_codigo": "POL-001", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-020", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 12000 },
+          { "codigo": "POL-021", "presentacion": "Pack x6", "costo_base": 0, "precio_venta": 67000 },
+          { "codigo": "POL-022", "presentacion": "Docena (x12)", "costo_base": 0, "precio_venta": 134000 }
+        ]
+      },
+      {
+        "id": "PROD-012", "categoria": "Varas, Cohetes & Lanzadores", "nombre": "Mini Cohete Silbador",
+        "imagen_codigo": "POL-001", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-023", "presentacion": "Pack x12", "costo_base": 0, "precio_venta": 7000 }
+        ]
+      },
+      {
+        "id": "PROD-013", "categoria": "Varas, Cohetes & Lanzadores", "nombre": "Voladores Virgen del Carmen",
+        "imagen_codigo": "POL-001", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-024", "presentacion": "Docena (x12)", "costo_base": 0, "precio_venta": 58500 }
+        ]
+      },
+      {
+        "id": "PROD-014", "categoria": "Varas, Cohetes & Lanzadores", "nombre": "Bazuka",
+        "imagen_codigo": "POL-025", "stock": "Pocas unidades",
+        "presentaciones": [
+          { "codigo": "POL-025", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 235000 }
+        ]
+      },
+      // ═══════════════ DETONANTES MENORES & DE MECHA ═══════════════
+      {
+        "id": "PROD-015", "categoria": "Detonantes Menores & de Mecha", "nombre": "Traqui Traqui",
+        "imagen_codigo": "POL-027", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-027", "presentacion": "Hoja x150", "costo_base": 0, "precio_venta": 8000 },
+          { "codigo": "POL-028", "presentacion": "Cartilla x600 (4 hojas)", "costo_base": 0, "precio_venta": 30000 }
+        ]
+      },
+      {
+        "id": "PROD-016", "categoria": "Detonantes Menores & de Mecha", "nombre": "Zeus Pintalabios",
+        "imagen_codigo": "POL-029", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-029", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 2500 },
+          { "codigo": "POL-030", "presentacion": "Pack x5", "costo_base": 0, "precio_venta": 12500 },
+          { "codigo": "POL-031", "presentacion": "Caja x20", "costo_base": 0, "precio_venta": 50000 }
+        ]
+      },
+      {
+        "id": "PROD-017", "categoria": "Detonantes Menores & de Mecha", "nombre": "Triangulitos",
+        "imagen_codigo": "POL-001", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-032", "presentacion": "Bolsa x100", "costo_base": 0, "precio_venta": 35000 }
+        ]
+      },
+      // ═══════════════ GOLPES & ESTALLIDOS ═══════════════
+      {
+        "id": "PROD-018", "categoria": "Golpes & Estallidos", "nombre": "1 Golpe (Fosforito)",
+        "imagen_codigo": "POL-001", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-033", "presentacion": "Pack x20", "costo_base": 0, "precio_venta": 10000 },
+          { "codigo": "POL-034", "presentacion": "Caja x100", "costo_base": 0, "precio_venta": 42000 }
+        ]
+      },
+      {
+        "id": "PROD-019", "categoria": "Golpes & Estallidos", "nombre": "4 Golpes",
+        "imagen_codigo": "POL-001", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-035", "presentacion": "Pack x30 Uds (5 cajitas)", "costo_base": 0, "precio_venta": 15000 },
+          { "codigo": "POL-036", "presentacion": "Paquete x120 (20 cajitas)", "costo_base": 0, "precio_venta": 44000 }
+        ]
+      },
+      {
+        "id": "PROD-020", "categoria": "Golpes & Estallidos", "nombre": "Martillo",
+        "imagen_codigo": "POL-038", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-037", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 2000 },
+          { "codigo": "POL-038", "presentacion": "Pack x10", "costo_base": 0, "precio_venta": 10000 },
+          { "codigo": "POL-039", "presentacion": "Caja x60", "costo_base": 0, "precio_venta": 60000 }
+        ]
+      },
+      {
+        "id": "PROD-021", "categoria": "Golpes & Estallidos", "nombre": "Metralleta",
+        "imagen_codigo": "POL-040", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-040", "presentacion": "Pack x5", "costo_base": 0, "precio_venta": 6500 },
+          { "codigo": "POL-041", "presentacion": "Pack x10", "costo_base": 0, "precio_venta": 15000 },
+          { "codigo": "POL-042", "presentacion": "Paquete x40", "costo_base": 0, "precio_venta": 50000 }
+        ]
+      },
+      {
+        "id": "PROD-022", "categoria": "Golpes & Estallidos", "nombre": "Matasuegra",
+        "imagen_codigo": "POL-001", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-043", "presentacion": "Paquete x100", "costo_base": 0, "precio_venta": 42000 }
+        ]
+      },
+      {
+        "id": "PROD-023", "categoria": "Golpes & Estallidos", "nombre": "Tiro Tiburón",
+        "imagen_codigo": "POL-001", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-051", "presentacion": "Pack x20", "costo_base": 0, "precio_venta": 6000 },
+          { "codigo": "POL-052", "presentacion": "Caja x100", "costo_base": 0, "precio_venta": 30000 }
+        ]
+      },
+      // ═══════════════ TORTAS & ESPECTÁCULOS AÉREOS ═══════════════
+      {
+        "id": "PROD-024", "categoria": "Tortas & Espectáculos Aéreos", "nombre": "Torta 16 Luces",
+        "imagen_codigo": "POL-001", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-044", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 50000 }
+        ]
+      },
+      {
+        "id": "PROD-025", "categoria": "Tortas & Espectáculos Aéreos", "nombre": "Torta 19 Luces (Pirulo)",
+        "imagen_codigo": "POL-045", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-045", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 65000 }
+        ]
+      },
+      {
+        "id": "PROD-026", "categoria": "Tortas & Espectáculos Aéreos", "nombre": "Torta 25 Luces",
+        "imagen_codigo": "POL-001", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-046", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 92000 }
+        ]
+      },
+      {
+        "id": "PROD-027", "categoria": "Tortas & Espectáculos Aéreos", "nombre": "Torta 30 Luces",
+        "imagen_codigo": "POL-001", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-047", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 100000 }
+        ]
+      },
+      {
+        "id": "PROD-028", "categoria": "Tortas & Espectáculos Aéreos", "nombre": "Torta 42 Luces",
+        "imagen_codigo": "POL-048", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-048", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 142000 }
+        ]
+      },
+      {
+        "id": "PROD-029", "categoria": "Tortas & Espectáculos Aéreos", "nombre": "Torta 100 Luces",
+        "imagen_codigo": "POL-001", "stock": "Pocas unidades",
+        "presentaciones": [
+          { "codigo": "POL-049", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 400000 }
+        ]
+      },
+      {
+        "id": "PROD-030", "categoria": "Tortas & Espectáculos Aéreos", "nombre": "Torta Revelación de Sexo",
+        "imagen_codigo": "POL-001", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "POL-050", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 250000 }
+        ]
+      },
+      {
+        "id": "PROD-031", "categoria": "Tortas & Espectáculos Aéreos", "nombre": "Torta 138 Luces",
+        "imagen_codigo": "POL-001", "stock": "Nuevo 2026",
+        "presentaciones": [
+          { "codigo": "POL-056", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 420000 }
+        ]
+      },
+      // ═══════════════ NUEVOS 2026 ═══════════════
+      {
+        "id": "PROD-032", "categoria": "Nuevos 2026", "nombre": "Estrobo",
+        "imagen_codigo": "POL-001", "stock": "Nuevo 2026",
+        "presentaciones": [
+          { "codigo": "POL-053", "presentacion": "Pack x5", "costo_base": 0, "precio_venta": 8500 }
+        ]
+      },
+      {
+        "id": "PROD-033", "categoria": "Nuevos 2026", "nombre": "Bengala Harry",
+        "imagen_codigo": "POL-054", "stock": "Nuevo 2026",
+        "presentaciones": [
+          { "codigo": "POL-054", "presentacion": "Pack x5", "costo_base": 0, "precio_venta": 17000 }
+        ]
+      },
+      {
+        "id": "PROD-034", "categoria": "Nuevos 2026", "nombre": "Supermetralleta",
+        "imagen_codigo": "POL-001", "stock": "Nuevo 2026",
+        "presentaciones": [
+          { "codigo": "POL-055", "presentacion": "Pack x200", "costo_base": 0, "precio_venta": 25000 }
+        ]
+      },
+      // ═══════════════ COMBOS PROMOCIONALES 2026 ═══════════════
+      {
+        "id": "PROD-035", "categoria": "Combos Promocionales 2026", "nombre": "Combo Familiar Inicial",
+        "imagen_codigo": "COMBO-01", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "COMBO-01", "presentacion": "Pack surtido luces y volcanes", "costo_base": 0, "precio_venta": 50000 }
+        ]
+      },
+      {
+        "id": "PROD-036", "categoria": "Combos Promocionales 2026", "nombre": "Combo Infantil Seguro",
+        "imagen_codigo": "COMBO-02", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "COMBO-02", "presentacion": "Chispitas, humos y rositas", "costo_base": 0, "precio_venta": 60000 }
+        ]
+      },
+      {
+        "id": "PROD-037", "categoria": "Combos Promocionales 2026", "nombre": "Combo Luces & Color",
+        "imagen_codigo": "COMBO-03", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "COMBO-03", "presentacion": "Varas, fuentes y bengalas", "costo_base": 0, "precio_venta": 96000 }
+        ]
+      },
+      {
+        "id": "PROD-038", "categoria": "Combos Promocionales 2026", "nombre": "Combo Estallido Barranquilla",
+        "imagen_codigo": "COMBO-04", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "COMBO-04", "presentacion": "Golpes, martillos y metralletas", "costo_base": 0, "precio_venta": 106000 }
+        ]
+      },
+      {
+        "id": "PROD-039", "categoria": "Combos Promocionales 2026", "nombre": "Combo Fiesta Soledad",
+        "imagen_codigo": "COMBO-05", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "COMBO-05", "presentacion": "Tortas, volcanes y varas", "costo_base": 0, "precio_venta": 185000 }
+        ]
+      },
+      {
+        "id": "PROD-040", "categoria": "Combos Promocionales 2026", "nombre": "Combo Celebración Premium",
+        "imagen_codigo": "COMBO-06", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "COMBO-06", "presentacion": "Selección aérea y luces", "costo_base": 0, "precio_venta": 275000 }
+        ]
+      },
+      {
+        "id": "PROD-041", "categoria": "Combos Promocionales 2026", "nombre": "Combo Evento / Reunión",
+        "imagen_codigo": "COMBO-07", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "COMBO-07", "presentacion": "Surtido alto rendimiento", "costo_base": 0, "precio_venta": 365000 }
+        ]
+      },
+      {
+        "id": "PROD-042", "categoria": "Combos Promocionales 2026", "nombre": "Combo Gran Show Fin de Año",
+        "imagen_codigo": "COMBO-08", "stock": "Disponible",
+        "presentaciones": [
+          { "codigo": "COMBO-08", "presentacion": "Paquete completo gran formato", "costo_base": 0, "precio_venta": 590000 }
+        ]
+      }
+    ];
 
-    // ========== ESTADO ==========
+    const CATALOGO_PLANO = [];
+    CATALOGO_AGRUPADO.forEach(prod => {
+      prod.presentaciones.forEach(pres => {
+        CATALOGO_PLANO.push({
+          codigo: pres.codigo,
+          categoria: prod.categoria,
+          nombre: prod.nombre,
+          presentacion: pres.presentacion,
+          precio_venta: pres.precio_venta,
+          stock: prod.stock || "Disponible"
+        });
+      });
+    });
+
     const state = {
       category: "Todos",
       search: "",
@@ -741,18 +910,6 @@
       gpsKm: null
     };
 
-    // Restaurar carrito desde localStorage
-    try {
-      const savedCart = localStorage.getItem(LS_CART_KEY);
-      if (savedCart) {
-        const parsed = JSON.parse(savedCart);
-        if (parsed && typeof parsed === "object") {
-          state.cart = parsed;
-        }
-      }
-    } catch (e) {}
-
-    // Inicializar variantes y cantidades por defecto
     CATALOGO_AGRUPADO.forEach(prod => {
       if (prod.presentaciones.length > 0) {
         state.selectedVariant[prod.id] = prod.presentaciones[0].codigo;
@@ -760,47 +917,6 @@
       state.quantities[prod.id] = 1;
     });
 
-    // Función para guardar carrito en localStorage
-    function saveCartToStorage() {
-      try { localStorage.setItem(LS_CART_KEY, JSON.stringify(state.cart)); } catch (e) {}
-    }
-
-    // Función para guardar datos de cliente en localStorage
-    function saveClientToStorage() {
-      try {
-        const data = {
-          clientName: document.getElementById("clientName").value,
-          clientPhone: document.getElementById("clientPhone").value,
-          clientNeighborhood: document.getElementById("clientNeighborhood").value,
-          clientAddress: document.getElementById("clientAddress").value,
-          clientZone: document.getElementById("clientZone").value,
-          sectorRef: document.getElementById("sectorRefSelect").value,
-          paymentMethod: document.getElementById("paymentMethod").value,
-          clientNote: document.getElementById("clientNote").value
-        };
-        localStorage.setItem(LS_CLIENT_KEY, JSON.stringify(data));
-      } catch (e) {}
-    }
-
-    // Restaurar datos de cliente desde localStorage
-    function restoreClientFromStorage() {
-      try {
-        const saved = localStorage.getItem(LS_CLIENT_KEY);
-        if (!saved) return;
-        const data = JSON.parse(saved);
-        if (!data || typeof data !== "object") return;
-        if (data.clientName) document.getElementById("clientName").value = data.clientName;
-        if (data.clientPhone) document.getElementById("clientPhone").value = data.clientPhone;
-        if (data.clientNeighborhood) document.getElementById("clientNeighborhood").value = data.clientNeighborhood;
-        if (data.clientAddress) document.getElementById("clientAddress").value = data.clientAddress;
-        if (data.clientZone) document.getElementById("clientZone").value = data.clientZone;
-        if (data.sectorRef) document.getElementById("sectorRefSelect").value = data.sectorRef;
-        if (data.paymentMethod) document.getElementById("paymentMethod").value = data.paymentMethod;
-        if (data.clientNote) document.getElementById("clientNote").value = data.clientNote;
-      } catch (e) {}
-    }
-
-    // ========== VENDEDOR POR URL ==========
     (function initSellerFromUrl() {
       try {
         const params = new URLSearchParams(window.location.search);
@@ -819,7 +935,6 @@
       } catch (e) {}
     })();
 
-    // ========== UTILIDADES ==========
     const fmtCOP = (n) => "$" + Number(n || 0).toLocaleString("es-CO");
     const roundToThousand = (n) => Math.round(n / 1000) * 1000;
 
@@ -835,25 +950,24 @@
       return 2 * R * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     }
 
-    // ========== CÁLCULO ENVÍO ==========
     function getShippingEstimate(subtotal) {
       let km = SECTOR_DISTANCES_KM[document.getElementById("sectorRefSelect").value] || 3.0;
       if (typeof state.gpsKm === "number" && !Number.isNaN(state.gpsKm)) {
         km = Math.max(1.0, Number((state.gpsKm * ROAD_FACTOR).toFixed(1)));
       }
-      const rawFee = Math.max(4000, roundToThousand(km * RATE_PER_KM));
+      const rawFee = Math.max(6000, roundToThousand(km * RATE_PER_KM));
 
       let discountFactor = 1;
-      let noteText = "El valor del domicilio puede variar dependiendo de la cantidad de tu compra";
+      let noteText = "Tarifa estimada (~$3.000/km), negociable según compra";
       if (subtotal >= 500000) {
         discountFactor = 0.0;
-        noteText = "¡Excelente cantidad de compra! Domicilio preferencial / negociable hasta $0";
+        noteText = "¡Compra alta! Domicilio negociable hasta $0 (cortesía por volumen)";
       } else if (subtotal >= 250000) {
         discountFactor = 0.5;
-        noteText = "Por la cantidad de tu compra puedes obtener hasta 50% de descuento en domicilio";
+        noteText = "Por el valor de tu compra puedes negociar hasta 50% del domicilio";
       } else if (subtotal >= 120000) {
         discountFactor = 0.75;
-        noteText = "Cantidad elegible para ajuste preferencial en el valor del domicilio";
+        noteText = "Monto elegible para descuento/negociación del domicilio";
       }
 
       const estimatedFee = roundToThousand(rawFee * discountFactor);
@@ -903,7 +1017,6 @@
       );
     }
 
-    // ========== FECHA/HORA BOGOTÁ ==========
     function getBogotaDateTime() {
       const now = new Date();
       const parts = new Intl.DateTimeFormat("sv-SE", {
@@ -923,15 +1036,13 @@
       return { stamp, formatted };
     }
 
-    // ========== FALLBACK SVG ==========
     function fallbackSvg(code, name) {
       const safeCode = String(code || "").replace(/[<>&"]/g, "");
       const safeName = String(name || "").replace(/[<>&"]/g, "");
-      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600"><rect width="800" height="600" fill="#000000"/><rect x="24" y="24" width="752" height="552" rx="18" fill="#0a0a0a" stroke="#d4af37" stroke-width="4"/><text x="400" y="255" text-anchor="middle" fill="#d4af37" font-family="Arial,sans-serif" font-size="44" font-weight="bold">${safeCode}</text><text x="400" y="315" text-anchor="middle" fill="#ffffff" font-family="Arial,sans-serif" font-size="24" font-weight="bold">${safeName}</text><text x="400" y="360" text-anchor="middle" fill="#b8860b" font-family="Arial,sans-serif" font-size="18">Pirotecnia Barranquilla 2026</text></svg>`;
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600"><rect width="800" height="600" fill="#141923"/><rect x="24" y="24" width="752" height="552" rx="18" fill="none" stroke="#2c3648" stroke-width="3"/><text x="400" y="255" text-anchor="middle" fill="#ffb703" font-family="Arial,sans-serif" font-size="42" font-weight="bold">${safeCode}</text><text x="400" y="315" text-anchor="middle" fill="#e2e8f0" font-family="Arial,sans-serif" font-size="24">${safeName}</text><text x="400" y="360" text-anchor="middle" fill="#94a3b8" font-family="Arial,sans-serif" font-size="18">Pirotecnia Barranquilla 2026</text></svg>`;
       return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
     }
 
-    // ========== CATEGORÍAS & GRID ==========
     function initCategories() {
       const cats = ["Todos", ...new Set(CATALOGO_AGRUPADO.map(i => i.categoria))];
       const select = document.getElementById("categorySelect");
@@ -998,7 +1109,7 @@
 
         return `
           <article class="card" id="card-${prod.id}">
-            <div class="img-wrap" onclick="openProductDetail('${prod.id}')" title="Ver detalle de ${safeName}">
+            <div class="img-wrap">
               <span class="code-badge" id="badge-${prod.id}">${active.codigo}</span>
               <span class="stock-badge ${getStockBadgeClass(stockLabel)}">${stockLabel}</span>
               <img src="img/${imgCode}.jpg" alt="${prod.nombre}"
@@ -1026,7 +1137,6 @@
       }).join("");
     }
 
-    // ========== SELECCIÓN Y CARRITO ==========
     function selectVariant(prodId, code) {
       state.selectedVariant[prodId] = code;
       const prod = CATALOGO_AGRUPADO.find(p => p.id === prodId);
@@ -1071,7 +1181,6 @@
       state.quantities[prodId] = 1;
       const el = document.getElementById("q-" + prodId);
       if (el) el.textContent = 1;
-      saveCartToStorage();
       updateCartBar();
     }
 
@@ -1109,14 +1218,12 @@
       } else {
         state.cart[code] = next;
       }
-      saveCartToStorage();
       updateCartBar();
       renderCartModal();
     }
 
     function clearCart() {
       state.cart = {};
-      saveCartToStorage();
       updateCartBar();
       renderCartModal();
     }
@@ -1153,12 +1260,10 @@
 
     function removeItem(code) {
       delete state.cart[code];
-      saveCartToStorage();
       updateCartBar();
       renderCartModal();
     }
 
-    // ========== MODAL ==========
     function openCartModal() {
       const entries = Object.entries(state.cart).filter(([, q]) => q > 0);
       if (!entries.length) {
@@ -1184,7 +1289,6 @@
       }
     }
 
-    // ========== CONSTRUIR ORDEN (Hallazgo 2 — subtotal_productos y domicilio_estimado separados) ==========
     function buildOrderDetails(orderId, bogotaTime) {
       const entries = Object.entries(state.cart).filter(([, q]) => q > 0);
       const sellerChoice = document.getElementById("sellerSelect").value;
@@ -1267,14 +1371,13 @@
       }
       lines.push("--------------------------------");
       lines.push(`*SUBTOTAL PRODUCTOS: ${fmtCOP(subtotal)}*`);
-      lines.push(`*DOMICILIO ESTIMADO (~$1.500/km · ${ship.km} km aprox.): ${fmtCOP(ship.estimatedFee)}*`);
+      lines.push(`*DOMICILIO ESTIMADO (~$3.000/km · ${ship.km} km aprox.): ${fmtCOP(ship.estimatedFee)}*`);
       lines.push(`*TOTAL ESTIMADO: ${fmtCOP(ship.grandTotal)}*`);
-      lines.push(`🚚 _Nota: Entrega solo a domicilio. El valor del domicilio (~$1.500/km) puede variar dependiendo de la cantidad y valor de tu compra. Para despachar se requiere como mínimo el valor del domicilio pago._`);
+      lines.push(`🚚 _Nota: Entrega solo a domicilio. El valor del domicilio es aproximado (~$3.000/km) y es negociable según el valor de tu compra. Para despachar se requiere como mínimo el valor del domicilio pago._`);
 
       return { payload, messageText: lines.join("\n") };
     }
 
-    // ========== VALIDACIÓN (Hallazgo 4 — teléfono ≥ 10 dígitos) ==========
     function validateFormFields() {
       const entries = Object.entries(state.cart).filter(([, q]) => q > 0);
       if (!entries.length) {
@@ -1306,13 +1409,6 @@
         document.getElementById("clientPhone").focus();
         return false;
       }
-      // Validación: mínimo 10 dígitos numéricos (Hallazgo 4 Auditoría)
-      const phoneDigits = phone.replace(/\D/g, "");
-      if (phoneDigits.length < 10) {
-        alert("El teléfono debe tener al menos 10 dígitos numéricos. Ejemplo: 300 123 4567");
-        document.getElementById("clientPhone").focus();
-        return false;
-      }
       if (!neighborhood) {
         alert("Por favor ingresa el barrio para el domicilio.");
         document.getElementById("clientNeighborhood").focus();
@@ -1326,7 +1422,6 @@
       return true;
     }
 
-    // ========== COPIAR / ENVIAR ==========
     async function copyOrderSummary() {
       if (!validateFormFields()) return;
       const bogotaTime = getBogotaDateTime();
@@ -1358,24 +1453,22 @@
         await fetch(APPS_SCRIPT_URL, {
           method: "POST",
           mode: "no-cors",
+          keepalive: true,
           headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify(payload)
         });
+        await new Promise(r => setTimeout(r, 800));
         statusEl.textContent = "Pedido registrado (" + orderId + "). Abriendo WhatsApp...";
       } catch (err) {
+        await new Promise(r => setTimeout(r, 800));
         statusEl.textContent = "Redirigiendo a WhatsApp...";
       }
-
-      // Limpiar carrito después de enviar
-      state.cart = {};
-      saveCartToStorage();
 
       const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(messageText)}`;
       btn.disabled = false;
       window.open(waUrl, "_blank");
     }
 
-    // ========== EVENT LISTENERS ==========
     document.getElementById("searchInput").addEventListener("input", (e) => {
       state.search = e.target.value;
       renderGrid();
@@ -1397,7 +1490,6 @@
       state.gpsKm = null;
       document.getElementById("useGpsBtn").textContent = "📍 Calcular con mi ubicación GPS";
       updateShippingUI();
-      saveClientToStorage();
     });
     document.getElementById("useGpsBtn").addEventListener("click", requestGpsDistance);
     document.getElementById("sellerSelect").addEventListener("change", toggleCustomSellerField);
@@ -1410,214 +1502,53 @@
     });
     document.getElementById("modalSendBtn").addEventListener("click", submitOrder);
 
-    // Persistir datos de cliente al escribir (Hallazgo 4)
-    ["clientName", "clientPhone", "clientNeighborhood", "clientAddress", "clientNote"].forEach(id => {
-      document.getElementById(id).addEventListener("input", saveClientToStorage);
-    });
-    ["clientZone", "paymentMethod"].forEach(id => {
-      document.getElementById(id).addEventListener("change", saveClientToStorage);
-    });
-
-    // ========== PRECIOS EN VIVO DESDE GOOGLE SHEETS ==========
-    // Sheet: "Catálogo de Pólvora 2026 - Lista de Precios"
-    // Requiere que el Sheet esté compartido como "Cualquiera con el enlace"
-    const SHEET_ID = "1lbRWti24fYni5u0GBqoN2XO5lQuNFZBTeUN-IXwmFXo";
-    const SHEET_CATALOGO = "Cat%C3%A1logo%202026";   // Tab: Catálogo 2026
-    const SHEET_COMBOS   = "Combos%202026";           // Tab: Combos 2026
-    const SHEET_TIMEOUT  = 4000; // ms máximo de espera
-
-    function buildSheetUrl(tab) {
-      return `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${tab}`;
-    }
-
-    function parseCsvRows(csvText) {
-      const rows = [];
-      let current = "";
-      let inQuotes = false;
-      for (let i = 0; i < csvText.length; i++) {
-        const ch = csvText[i];
-        if (ch === '"') { inQuotes = !inQuotes; continue; }
-        if (ch === "\n" && !inQuotes) { rows.push(current); current = ""; continue; }
-        if (ch === "\r" && !inQuotes) continue;
-        current += ch;
-      }
-      if (current.trim()) rows.push(current);
-      return rows.map(r => {
-        const cols = [];
-        let col = "";
-        let q = false;
-        for (let i = 0; i < r.length; i++) {
-          const c = r[i];
-          if (c === '"') { q = !q; continue; }
-          if (c === "," && !q) { cols.push(col.trim()); col = ""; continue; }
-          col += c;
-        }
-        cols.push(col.trim());
-        return cols;
-      });
-    }
-
-    function parsePrecioCop(str) {
-      if (!str) return 0;
-      return parseInt(str.replace(/[$.\s]/g, ""), 10) || 0;
-    }
-
-    async function fetchWithTimeout(url, ms) {
-      const ctrl = new AbortController();
-      const timer = setTimeout(() => ctrl.abort(), ms);
+    // ═══════════════ CARGA DE PRECIOS EN VIVO DESDE SHEET ═══════════════
+    async function cargarPreciosVivos() {
       try {
-        const res = await fetch(url, { signal: ctrl.signal });
-        clearTimeout(timer);
-        return res;
-      } catch (e) {
-        clearTimeout(timer);
-        throw e;
-      }
-    }
-
-    async function cargarPreciosEnVivo() {
-      try {
-        const [resCat, resCombos] = await Promise.all([
-          fetchWithTimeout(buildSheetUrl(SHEET_CATALOGO), SHEET_TIMEOUT),
-          fetchWithTimeout(buildSheetUrl(SHEET_COMBOS), SHEET_TIMEOUT)
-        ]);
-
-        if (!resCat.ok || !resCombos.ok) throw new Error("HTTP error");
-
-        const csvCat    = await resCat.text();
-        const csvCombos = await resCombos.text();
-
-        const rowsCat    = parseCsvRows(csvCat);
-        const rowsCombos = parseCsvRows(csvCombos);
-
-        const preciosVivos = {};
-        let countCat = 0, countCombos = 0;
-
-        // Tab "Catálogo 2026": filas 7+ (índice 6+), col A=código, col F=precio venta
-        // Headers en fila 6 (índice 5): Código, Categoría, Producto, Presentación, Descripción, Precio Venta 2026, ...
-        for (let i = 6; i < rowsCat.length; i++) {
-          const row = rowsCat[i];
-          if (!row || row.length < 6) continue;
-          const codigo = (row[0] || "").trim();
-          const precioVenta = parsePrecioCop(row[5]);
-          if (codigo.startsWith("POL-") && precioVenta > 0) {
-            // costo_base: conservar el existente o estimar ~70% del precio venta
-            const existente = PRECIOS_2026[codigo];
-            const costoBase = existente ? existente.costo_base : Math.round(precioVenta * 0.7);
-            preciosVivos[codigo] = { costo_base: costoBase, precio_venta: precioVenta };
-            countCat++;
-          }
+        const resp = await fetch(APPS_SCRIPT_URL, { method: "GET" });
+        const data = await resp.json();
+        if (!data.ok || !data.precios) {
+          console.warn("Precios en vivo: respuesta sin datos, usando precios locales de respaldo.");
+          return;
         }
-
-        // Tab "Combos 2026": filas 7+ (índice 6+), col A=código, col G=precio combo
-        // Headers: Código, Línea, Nombre, Contenido, Costo Total, Suma Individuales, Precio Combo 2026, ...
-        for (let i = 6; i < rowsCombos.length; i++) {
-          const row = rowsCombos[i];
-          if (!row || row.length < 7) continue;
-          const codigo = (row[0] || "").trim();
-          const precioCombo = parsePrecioCop(row[6]);
-          if (codigo.startsWith("COMBO-") && precioCombo > 0) {
-            const costoTotal = parsePrecioCop(row[4]);
-            preciosVivos[codigo] = {
-              costo_base: costoTotal > 0 ? costoTotal : Math.round(precioCombo * 0.7),
-              precio_venta: precioCombo
-            };
-            countCombos++;
-          }
-        }
-
-        const totalVivos = countCat + countCombos;
-        if (totalVivos === 0) throw new Error("No se parsearon precios");
-
-        // Re-inyectar precios en vivo al catálogo
-        inyectarPrecios(preciosVivos);
-        regenerarCatalogoPlano();
-
-        console.log(`✅ Precios en vivo cargados: ${countCat} productos + ${countCombos} combos`);
-        return { ok: true, count: totalVivos };
-
+        const p = data.precios;
+        let updated = 0;
+        CATALOGO_AGRUPADO.forEach(prod => {
+          prod.presentaciones.forEach(pres => {
+            if (p[pres.codigo] !== undefined && p[pres.codigo] > 0) {
+              pres.precio_venta = p[pres.codigo];
+              updated++;
+            }
+          });
+        });
+        // Reconstruir CATALOGO_PLANO con precios actualizados
+        CATALOGO_PLANO.length = 0;
+        CATALOGO_AGRUPADO.forEach(prod => {
+          prod.presentaciones.forEach(pres => {
+            CATALOGO_PLANO.push({
+              codigo: pres.codigo,
+              categoria: prod.categoria,
+              nombre: prod.nombre,
+              presentacion: pres.presentacion,
+              precio_venta: pres.precio_venta,
+              stock: prod.stock || "Disponible"
+            });
+          });
+        });
+        renderGrid();
+        updateCartBar();
+        console.log(`Precios en vivo cargados: ${updated} actualizados desde Sheet maestro.`);
       } catch (err) {
-        console.warn("⚠ No se pudieron cargar precios en vivo, usando fallback estático:", err.message);
-        return { ok: false, error: err.message };
+        console.warn("No se pudieron cargar precios en vivo, usando respaldo local:", err.message);
       }
     }
 
-    // ========== INICIALIZACIÓN ==========
-    (async function initApp() {
-      // 1. Intentar cargar precios en vivo desde Google Sheets
-      const resultado = await cargarPreciosEnVivo();
-
-      // 2. Inicializar UI
-      initCategories();
-      syncChipActive();
-      toggleCustomSellerField();
-      restoreClientFromStorage();
-      renderGrid();
-      updateCartBar();
-
-      // 3. Indicador sutil de fuente de precios (esquina inferior, temporal)
-      if (resultado.ok) {
-        const badge = document.createElement("div");
-        badge.textContent = `Precios actualizados en vivo (${resultado.count} ítems)`;
-        badge.style.cssText = "position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#15803d;color:#fff;padding:6px 16px;border-radius:999px;font-size:0.78rem;z-index:99;opacity:0.95;pointer-events:none;";
-        document.body.appendChild(badge);
-        setTimeout(() => { badge.style.transition = "opacity 1s"; badge.style.opacity = "0"; }, 3500);
-        setTimeout(() => badge.remove(), 4800);
-      }
-    })();
-    // ========== PRODUCT DETAIL POPUP ==========
-    function openProductDetail(prodId) {
-      const prod = CATALOGO_AGRUPADO.find(p => p.id === prodId);
-      if (!prod) return;
-      const imgCode = prod.imagen_codigo || prod.presentaciones[0].codigo;
-      const safeName = prod.nombre.replace(/'/g, "");
-      const desc = prod.descripcion || "Producto pirotécnico de alta calidad. Consulte disponibilidad y detalles por WhatsApp.";
-
-      const overlay = document.getElementById("productPopupOverlay");
-      document.getElementById("popupTitle").textContent = prod.nombre;
-      document.getElementById("popupCategory").textContent = prod.categoria;
-      document.getElementById("popupDesc").textContent = desc;
-      document.getElementById("popupCode").textContent = imgCode;
-
-      const img = document.getElementById("popupImg");
-      img.src = `img/${imgCode}.jpg`;
-      img.alt = prod.nombre;
-      img.onerror = function() { this.onerror = null; this.src = fallbackSvg(imgCode, safeName); };
-
-      overlay.classList.add("active");
-      document.body.style.overflow = "hidden";
-    }
-
-    function closeProductDetail() {
-      document.getElementById("productPopupOverlay").classList.remove("active");
-      document.body.style.overflow = "";
-    }
-
-    // Close on click outside popup
-    document.addEventListener("click", function(e) {
-      const overlay = document.getElementById("productPopupOverlay");
-      if (e.target === overlay) closeProductDetail();
-    });
-    // Close on Escape key
-    document.addEventListener("keydown", function(e) {
-      if (e.key === "Escape") closeProductDetail();
-    });
+    initCategories();
+    syncChipActive();
+    toggleCustomSellerField();
+    renderGrid();
+    updateCartBar();
+    cargarPreciosVivos();
   </script>
-
-  <!-- Product Detail Popup -->
-  <div class="product-popup-overlay" id="productPopupOverlay">
-    <div class="product-popup">
-      <div class="product-popup-header">
-        <h3 id="popupTitle"></h3>
-        <button class="product-popup-close" onclick="closeProductDetail()" aria-label="Cerrar">&times;</button>
-      </div>
-      <img class="product-popup-img" id="popupImg" src="" alt="" />
-      <div class="product-popup-body">
-        <div class="product-popup-cat" id="popupCategory"></div>
-        <div class="product-popup-desc" id="popupDesc"></div>
-        <span class="product-popup-code" id="popupCode"></span>
-      </div>
-    </div>
-  </div>
 </body>
 </html>
