@@ -1,9 +1,16 @@
 <!DOCTYPE html>
-<!-- Pirotecnia Barranquilla 2026 | v10.2 | 2026-11-25 | Tema blanco + negro + dorado: fondo blanco, acentos dorados, header negro -->
+<!-- Pirotecnia Barranquilla 2026 | v12.0 | 2026-11-26 | 15 mejoras completas: localStorage, lazy loading, WhatsApp flotante, SEO, favicon, footer, animación agregar, lightbox fotos, ordenar productos, banner temporada, scroll-top, badge carrito, contador resultados, estado vacío, click-fuera-modal -->
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Catálogo oficial de pólvora y pirotecnia en Barranquilla y Soledad. Tortas, volcanes, bengalas, combos y más. Domicilios a tu puerta. Temporada 2026." />
+  <meta name="theme-color" content="#1a1a1a" />
+  <meta property="og:title" content="Pirotecnia Barranquilla 2026 — Catálogo Oficial" />
+  <meta property="og:description" content="Tortas, volcanes, bengalas, combos y más. Domicilios en Barranquilla y Soledad." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pirotecniabarranquilla.com" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎆</text></svg>" />
   <title>Pirotecnia Barranquilla 2026 | Catálogo Oficial</title>
   <style>
     :root {
@@ -44,9 +51,10 @@
       align-items: center;
       justify-content: space-between;
     }
-    h1 { font-size: 1.35rem; font-weight: 800; }
+    h1 { font-size: 1.35rem; font-weight: 800; color: #ffffff; }
     h1 span { color: var(--accent-2); }
     .sub { font-size: 0.85rem; color: var(--muted); }
+    header .sub { color: #cccccc; }
     .controls {
       max-width: 1240px;
       margin: 16px auto 0;
@@ -366,9 +374,181 @@
       align-items: center;
       gap: 10px;
     }
+    /* ═══ BANNER TEMPORADA ═══ */
+    .season-banner {
+      background: linear-gradient(90deg, #1a1a1a 0%, #2a2a2a 50%, #1a1a1a 100%);
+      text-align: center;
+      padding: 10px 20px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--accent-2);
+      border-bottom: 2px solid var(--accent);
+      letter-spacing: 0.5px;
+    }
+    .season-banner span { color: #ffffff; }
+    /* ═══ SORT BAR ═══ */
+    .sort-bar {
+      max-width: 1240px;
+      margin: 8px auto 0;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .sort-select {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      cursor: pointer;
+    }
+    /* ═══ EMPTY STATE ═══ */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+    }
+    .empty-state .empty-icon { font-size: 3rem; margin-bottom: 12px; }
+    .empty-state p { font-size: 1rem; }
+    .empty-state .empty-hint { font-size: 0.85rem; margin-top: 6px; color: var(--accent); }
+    /* ═══ WHATSAPP FLOTANTE ═══ */
+    .wa-float {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      width: 56px;
+      height: 56px;
+      background: #25d366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.7rem;
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+      cursor: pointer;
+      z-index: 25;
+      text-decoration: none;
+      transition: transform 0.2s ease;
+    }
+    .wa-float:hover { transform: scale(1.1); }
+    /* ═══ SCROLL TO TOP ═══ */
+    .scroll-top {
+      position: fixed;
+      bottom: 80px;
+      left: 20px;
+      width: 44px;
+      height: 44px;
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 25;
+      color: var(--text);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      transition: opacity 0.2s ease;
+    }
+    .scroll-top.show { display: flex; }
+    /* ═══ CART BADGE ═══ */
+    .cart-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      min-width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      padding: 0 5px;
+      margin-left: 6px;
+    }
+    .cart-badge:empty { display: none; }
+    /* ═══ ADD-TO-CART ANIMATION ═══ */
+    @keyframes addPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.12); box-shadow: 0 0 12px rgba(212,175,55,0.5); }
+      100% { transform: scale(1); }
+    }
+    .add-btn.pulse { animation: addPulse 0.4s ease; }
+    .card.addPulse { animation: addPulse 0.4s ease; }
+    /* ═══ CARD HOVER ═══ */
+    .card { transition: box-shadow 0.2s ease, transform 0.15s ease; }
+    .card:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.08); transform: translateY(-2px); }
+    /* ═══ LIGHTBOX ═══ */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 60;
+      cursor: pointer;
+      padding: 20px;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 85vh;
+      border-radius: 12px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+      object-fit: contain;
+    }
+    .lightbox-caption {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.7);
+      color: #fff;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      background: rgba(255,255,255,0.15);
+      border: none;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 1.3rem;
+      cursor: pointer;
+    }
+    .img-wrap { cursor: pointer; }
+    /* ═══ FOOTER ═══ */
+    .site-footer {
+      background: #1a1a1a;
+      color: #cccccc;
+      text-align: center;
+      padding: 24px 20px 100px;
+      font-size: 0.82rem;
+      line-height: 1.6;
+      border-top: 3px solid var(--accent-2);
+      margin-top: 24px;
+    }
+    .site-footer strong { color: var(--accent-2); }
+    .site-footer a { color: var(--accent-2); text-decoration: none; }
+    .site-footer a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
+  <div class="season-banner">🎆 <span>Temporada Fin de Año 2026</span> — Domicilios en Barranquilla y Soledad 🎇</div>
   <header>
     <div class="header-inner">
       <div>
@@ -392,6 +572,17 @@
     <button class="chip-btn" data-chip="Golpes & Estallidos">Golpes & Estallidos</button>
   </div>
 
+  <div class="sort-bar">
+    <span id="resultCount">35 productos</span>
+    <select class="sort-select" id="sortSelect" aria-label="Ordenar productos">
+      <option value="default">Ordenar: Por defecto</option>
+      <option value="price-asc">Precio: menor a mayor</option>
+      <option value="price-desc">Precio: mayor a menor</option>
+      <option value="name-asc">Nombre: A → Z</option>
+      <option value="name-desc">Nombre: Z → A</option>
+    </select>
+  </div>
+
   <main class="grid" id="catalogGrid"></main>
 
   <div class="cart-bar">
@@ -400,7 +591,7 @@
         <strong id="cartSummary">0 unidades</strong> · Productos: <strong id="cartTotal" style="color: var(--ok);">$0</strong>
       </div>
       <div style="display:flex; gap:10px;">
-        <button class="sec-btn" id="openCartBtn">Ver pedido</button>
+        <button class="sec-btn" id="openCartBtn">Ver pedido<span class="cart-badge" id="cartBadge"></span></button>
         <button class="wa-btn" id="sendWaBtn">Continuar pedido</button>
       </div>
     </div>
@@ -542,6 +733,27 @@
     </div>
   </div>
 
+  <!-- WhatsApp flotante -->
+  <a class="wa-float" id="waFloat" href="https://wa.me/573046720294?text=Hola%2C%20quiero%20información%20sobre%20el%20catálogo%20de%20pólvora%202026" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">💬</a>
+
+  <!-- Scroll to top -->
+  <button class="scroll-top" id="scrollTopBtn" aria-label="Volver arriba">↑</button>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose">✕</button>
+    <img id="lightboxImg" src="" alt="" />
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <strong>Pirotecnia Barranquilla 2026</strong><br/>
+    📞 <a href="tel:+573046720294">304 672 0294</a> · 💬 <a href="https://wa.me/573046720294" target="_blank" rel="noopener">WhatsApp</a><br/>
+    Entregas exclusivamente a domicilio en Barranquilla y Soledad<br/>
+    <small style="color:#888;">© 2026 Pirotecnia Barranquilla. Todos los derechos reservados.</small>
+  </footer>
+
   <script>
     const WHATSAPP_NUMBER = "573046720294";
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_uXFu419i_NbP8-a6axqp9cveqcJsaeariXRRwsY-LFbLE3RuLPvh8HAAR8XOEseB/exec";
@@ -567,39 +779,30 @@
         "id": "PROD-001", "categoria": "Volcanes & Fuentes", "nombre": "Volcancito",
         "imagen_codigo": "POL-001", "stock": "Disponible",
         "presentaciones": [
-          { "codigo": "POL-001", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 1400 },
-          { "codigo": "POL-002", "presentacion": "Media Docena (x6)", "costo_base": 0, "precio_venta": 8000 },
-          { "codigo": "POL-003", "presentacion": "Pack x10", "costo_base": 0, "precio_venta": 13500 }
-        ]
-      },
-      {
-        "id": "PROD-002", "categoria": "Volcanes & Fuentes", "nombre": "Volcán Grande",
-        "imagen_codigo": "POL-004", "stock": "Disponible",
-        "presentaciones": [
-          { "codigo": "POL-004", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 7000 },
-          { "codigo": "POL-005", "presentacion": "Media Docena (x6)", "costo_base": 0, "precio_venta": 38500 },
-          { "codigo": "POL-006", "presentacion": "Docena (x12)", "costo_base": 0, "precio_venta": 77000 }
+          { "codigo": "POL-001", "presentacion": "Unidad", "costo_base": 800, "precio_venta": 1500 },
+          { "codigo": "POL-002", "presentacion": "Media Docena (x6)", "costo_base": 4800, "precio_venta": 7000 },
+          { "codigo": "POL-003", "presentacion": "Pack x10", "costo_base": 8000, "precio_venta": 11000 }
         ]
       },
       {
         "id": "PROD-003", "categoria": "Volcanes & Fuentes", "nombre": "Fuente Cuco Pequeña",
         "imagen_codigo": "POL-007", "stock": "Disponible",
         "presentaciones": [
-          { "codigo": "POL-007", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 5000 }
+          { "codigo": "POL-007", "presentacion": "Unidad", "costo_base": 2417, "precio_venta": 5500 }
         ]
       },
       {
         "id": "PROD-004", "categoria": "Volcanes & Fuentes", "nombre": "Fuente Cuco Grande",
         "imagen_codigo": "POL-008", "stock": "Disponible",
         "presentaciones": [
-          { "codigo": "POL-008", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 9000 }
+          { "codigo": "POL-008", "presentacion": "Unidad", "costo_base": 4500, "precio_venta": 10000 }
         ]
       },
       {
         "id": "PROD-005", "categoria": "Volcanes & Fuentes", "nombre": "Fuente Festival / Triangular",
         "imagen_codigo": "POL-009", "stock": "Disponible",
         "presentaciones": [
-          { "codigo": "POL-009", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 75000 }
+          { "codigo": "POL-009", "presentacion": "Unidad", "costo_base": 45000, "precio_venta": 63000 }
         ]
       },
       // ═══════════════ LUCES, BENGALAS & HUMOS ═══════════════
@@ -607,15 +810,15 @@
         "id": "PROD-006", "categoria": "Luces, Bengalas & Humos", "nombre": "Chispitas Mariposas",
         "imagen_codigo": "POL-010", "stock": "Disponible",
         "presentaciones": [
-          { "codigo": "POL-010", "presentacion": "Pack x6 Cajitas", "costo_base": 0, "precio_venta": 11000 },
-          { "codigo": "POL-011", "presentacion": "Caja x12 Cajitas", "costo_base": 0, "precio_venta": 22000 }
+          { "codigo": "POL-010", "presentacion": "Pack x6 Cajitas", "costo_base": 6500, "precio_venta": 9000 },
+          { "codigo": "POL-011", "presentacion": "Caja x12 Cajitas", "costo_base": 13000, "precio_venta": 18000 }
         ]
       },
       {
         "id": "PROD-007", "categoria": "Luces, Bengalas & Humos", "nombre": "Bengala de Humo / Humo de Colores",
         "imagen_codigo": "POL-012", "stock": "Disponible",
         "presentaciones": [
-          { "codigo": "POL-012", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 25000 }
+          { "codigo": "POL-012", "presentacion": "Unidad", "costo_base": 15000, "precio_venta": 21000 }
         ]
       },
       // ═══════════════ EFECTOS GIRATORIOS & PISO ═══════════════
@@ -623,24 +826,24 @@
         "id": "PROD-008", "categoria": "Efectos Giratorios & Piso", "nombre": "Rosa Cracker (Rosita)",
         "imagen_codigo": "POL-014", "stock": "Disponible",
         "presentaciones": [
-          { "codigo": "POL-014", "presentacion": "Pack x6", "costo_base": 0, "precio_venta": 7000 },
-          { "codigo": "POL-015", "presentacion": "Media Docena Packs (x36)", "costo_base": 0, "precio_venta": 42000 },
-          { "codigo": "POL-016", "presentacion": "Caja x72", "costo_base": 0, "precio_venta": 60000 }
+          { "codigo": "POL-014", "presentacion": "Pack x6", "costo_base": 4000, "precio_venta": 5500 },
+          { "codigo": "POL-015", "presentacion": "Media Docena Packs (x36)", "costo_base": 17500, "precio_venta": 25000 },
+          { "codigo": "POL-016", "presentacion": "Caja x72", "costo_base": 35000, "precio_venta": 49000 }
         ]
       },
       {
         "id": "PROD-009", "categoria": "Efectos Giratorios & Piso", "nombre": "Crackel Barrel (Barrilito)",
         "imagen_codigo": "POL-017", "stock": "Disponible",
         "presentaciones": [
-          { "codigo": "POL-017", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 8000 },
-          { "codigo": "POL-018", "presentacion": "Caja x6", "costo_base": 0, "precio_venta": 42000 }
+          { "codigo": "POL-017", "presentacion": "Unidad", "costo_base": 3500, "precio_venta": 9000 },
+          { "codigo": "POL-018", "presentacion": "Caja x6", "costo_base": 21000, "precio_venta": 29500 }
         ]
       },
       {
         "id": "PROD-010", "categoria": "Efectos Giratorios & Piso", "nombre": "Helicóptero",
         "imagen_codigo": "POL-019", "stock": "Disponible",
         "presentaciones": [
-          { "codigo": "POL-019", "presentacion": "Pack x6 Unidades", "costo_base": 0, "precio_venta": 25000 }
+          { "codigo": "POL-019", "presentacion": "Pack x6 Unidades", "costo_base": 15000, "precio_venta": 21000 }
         ]
       },
       // ═══════════════ VARAS, COHETES & LANZADORES ═══════════════
@@ -648,30 +851,23 @@
         "id": "PROD-011", "categoria": "Varas, Cohetes & Lanzadores", "nombre": "Vara Soplona 30 Luces",
         "imagen_codigo": "POL-020", "stock": "Disponible",
         "presentaciones": [
-          { "codigo": "POL-020", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 12000 },
-          { "codigo": "POL-021", "presentacion": "Pack x6", "costo_base": 0, "precio_venta": 67000 },
-          { "codigo": "POL-022", "presentacion": "Docena (x12)", "costo_base": 0, "precio_venta": 134000 }
+          { "codigo": "POL-020", "presentacion": "Unidad", "costo_base": 6667, "precio_venta": 13500 },
+          { "codigo": "POL-021", "presentacion": "Pack x6", "costo_base": 40000, "precio_venta": 56000 },
+          { "codigo": "POL-022", "presentacion": "Docena (x12)", "costo_base": 80000, "precio_venta": 112000 }
         ]
       },
       {
         "id": "PROD-012", "categoria": "Varas, Cohetes & Lanzadores", "nombre": "Mini Cohete Silbador",
         "imagen_codigo": "POL-023", "stock": "Disponible",
         "presentaciones": [
-          { "codigo": "POL-023", "presentacion": "Pack x12", "costo_base": 0, "precio_venta": 7000 }
-        ]
-      },
-      {
-        "id": "PROD-013", "categoria": "Varas, Cohetes & Lanzadores", "nombre": "Voladores Virgen del Carmen",
-        "imagen_codigo": "POL-024", "stock": "Disponible",
-        "presentaciones": [
-          { "codigo": "POL-024", "presentacion": "Docena (x12)", "costo_base": 0, "precio_venta": 58500 }
+          { "codigo": "POL-023", "presentacion": "Pack x12", "costo_base": 4000, "precio_venta": 5500 }
         ]
       },
       {
         "id": "PROD-014", "categoria": "Varas, Cohetes & Lanzadores", "nombre": "Bazuka",
         "imagen_codigo": "POL-025", "stock": "Pocas unidades",
         "presentaciones": [
-          { "codigo": "POL-025", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 235000 }
+          { "codigo": "POL-025", "presentacion": "Unidad", "costo_base": 140000, "precio_venta": 196000 }
         ]
       },
       // ═══════════════ DETONANTES MENORES & DE MECHA ═══════════════
@@ -679,24 +875,17 @@
         "id": "PROD-015", "categoria": "Detonantes Menores & de Mecha", "nombre": "Traqui Traqui",
         "imagen_codigo": "POL-027", "stock": "Disponible",
         "presentaciones": [
-          { "codigo": "POL-027", "presentacion": "Hoja x150", "costo_base": 0, "precio_venta": 8000 },
-          { "codigo": "POL-028", "presentacion": "Cartilla x600 (4 hojas)", "costo_base": 0, "precio_venta": 30000 }
+          { "codigo": "POL-027", "presentacion": "Hoja x150", "costo_base": 4500, "precio_venta": 6500 },
+          { "codigo": "POL-028", "presentacion": "Cartilla x600 (4 hojas)", "costo_base": 18000, "precio_venta": 25000 }
         ]
       },
       {
         "id": "PROD-016", "categoria": "Detonantes Menores & de Mecha", "nombre": "Zeus Pintalabios",
         "imagen_codigo": "POL-029", "stock": "Disponible",
         "presentaciones": [
-          { "codigo": "POL-029", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 2500 },
-          { "codigo": "POL-030", "presentacion": "Pack x5", "costo_base": 0, "precio_venta": 12500 },
-          { "codigo": "POL-031", "presentacion": "Caja x20", "costo_base": 0, "precio_venta": 50000 }
-        ]
-      },
-      {
-        "id": "PROD-017", "categoria": "Detonantes Menores & de Mecha", "nombre": "Triangulitos",
-        "imagen_codigo": "POL-032", "stock": "Disponible",
-        "presentaciones": [
-          { "codigo": "POL-032", "presentacion": "Bolsa x100", "costo_base": 0, "precio_venta": 35000 }
+          { "codigo": "POL-029", "presentacion": "Unidad", "costo_base": 1500, "precio_venta": 3500 },
+          { "codigo": "POL-030", "presentacion": "Pack x5", "costo_base": 7500, "precio_venta": 10500 },
+          { "codigo": "POL-031", "presentacion": "Caja x20", "costo_base": 30000, "precio_venta": 42000 }
         ]
       },
       // ═══════════════ GOLPES & ESTALLIDOS ═══════════════
@@ -704,49 +893,34 @@
         "id": "PROD-018", "categoria": "Golpes & Estallidos", "nombre": "1 Golpe (Fosforito)",
         "imagen_codigo": "POL-033", "stock": "Disponible",
         "presentaciones": [
-          { "codigo": "POL-033", "presentacion": "Pack x20", "costo_base": 0, "precio_venta": 10000 },
-          { "codigo": "POL-034", "presentacion": "Caja x100", "costo_base": 0, "precio_venta": 42000 }
+          { "codigo": "POL-033", "presentacion": "Pack x20", "costo_base": 5000, "precio_venta": 7000 },
+          { "codigo": "POL-034", "presentacion": "Caja x100", "costo_base": 25000, "precio_venta": 35000 }
         ]
       },
       {
         "id": "PROD-019", "categoria": "Golpes & Estallidos", "nombre": "4 Golpes",
         "imagen_codigo": "POL-035", "stock": "Disponible",
         "presentaciones": [
-          { "codigo": "POL-035", "presentacion": "Pack x30 Uds (5 cajitas)", "costo_base": 0, "precio_venta": 15000 },
-          { "codigo": "POL-036", "presentacion": "Paquete x120 (20 cajitas)", "costo_base": 0, "precio_venta": 44000 }
+          { "codigo": "POL-035", "presentacion": "Pack x30 Uds (5 cajitas)", "costo_base": 6500, "precio_venta": 9000 },
+          { "codigo": "POL-036", "presentacion": "Paquete x120 (20 cajitas)", "costo_base": 26000, "precio_venta": 36500 }
         ]
       },
       {
         "id": "PROD-020", "categoria": "Golpes & Estallidos", "nombre": "Martillo",
         "imagen_codigo": "POL-038", "stock": "Disponible",
         "presentaciones": [
-          { "codigo": "POL-037", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 2000 },
-          { "codigo": "POL-038", "presentacion": "Pack x10", "costo_base": 0, "precio_venta": 10000 },
-          { "codigo": "POL-039", "presentacion": "Caja x60", "costo_base": 0, "precio_venta": 60000 }
+          { "codigo": "POL-037", "presentacion": "Unidad", "costo_base": 600, "precio_venta": 2500 },
+          { "codigo": "POL-038", "presentacion": "Pack x10", "costo_base": 6000, "precio_venta": 8500 },
+          { "codigo": "POL-039", "presentacion": "Caja x60", "costo_base": 36000, "precio_venta": 50000 }
         ]
       },
       {
         "id": "PROD-021", "categoria": "Golpes & Estallidos", "nombre": "Metralleta",
         "imagen_codigo": "POL-040", "stock": "Disponible",
         "presentaciones": [
-          { "codigo": "POL-040", "presentacion": "Pack x5", "costo_base": 0, "precio_venta": 6500 },
-          { "codigo": "POL-041", "presentacion": "Pack x10", "costo_base": 0, "precio_venta": 15000 },
-          { "codigo": "POL-042", "presentacion": "Paquete x40", "costo_base": 0, "precio_venta": 50000 }
-        ]
-      },
-      {
-        "id": "PROD-022", "categoria": "Golpes & Estallidos", "nombre": "Matasuegra",
-        "imagen_codigo": "POL-043", "stock": "Disponible",
-        "presentaciones": [
-          { "codigo": "POL-043", "presentacion": "Paquete x100", "costo_base": 0, "precio_venta": 42000 }
-        ]
-      },
-      {
-        "id": "PROD-023", "categoria": "Golpes & Estallidos", "nombre": "Tiro Tiburón",
-        "imagen_codigo": "POL-051", "stock": "Disponible",
-        "presentaciones": [
-          { "codigo": "POL-051", "presentacion": "Pack x20", "costo_base": 0, "precio_venta": 6000 },
-          { "codigo": "POL-052", "presentacion": "Caja x100", "costo_base": 0, "precio_venta": 30000 }
+          { "codigo": "POL-040", "presentacion": "Pack x5", "costo_base": 3750, "precio_venta": 5500 },
+          { "codigo": "POL-041", "presentacion": "Pack x10", "costo_base": 7500, "precio_venta": 10500 },
+          { "codigo": "POL-042", "presentacion": "Paquete x40", "costo_base": 30000, "precio_venta": 42000 }
         ]
       },
       // ═══════════════ TORTAS & ESPECTÁCULOS AÉREOS ═══════════════
@@ -754,56 +928,42 @@
         "id": "PROD-024", "categoria": "Tortas & Espectáculos Aéreos", "nombre": "Torta 16 Luces",
         "imagen_codigo": "POL-044", "stock": "Disponible",
         "presentaciones": [
-          { "codigo": "POL-044", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 50000 }
+          { "codigo": "POL-044", "presentacion": "Unidad", "costo_base": 30000, "precio_venta": 42000 }
         ]
       },
       {
         "id": "PROD-025", "categoria": "Tortas & Espectáculos Aéreos", "nombre": "Torta 19 Luces (Pirulo)",
         "imagen_codigo": "POL-045", "stock": "Disponible",
         "presentaciones": [
-          { "codigo": "POL-045", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 65000 }
+          { "codigo": "POL-045", "presentacion": "Unidad", "costo_base": 37000, "precio_venta": 52000 }
         ]
       },
       {
         "id": "PROD-026", "categoria": "Tortas & Espectáculos Aéreos", "nombre": "Torta 25 Luces",
         "imagen_codigo": "POL-046", "stock": "Disponible",
         "presentaciones": [
-          { "codigo": "POL-046", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 92000 }
+          { "codigo": "POL-046", "presentacion": "Unidad", "costo_base": 50000, "precio_venta": 70000 }
         ]
       },
       {
-        "id": "PROD-027", "categoria": "Tortas & Espectáculos Aéreos", "nombre": "Torta 30 Luces",
-        "imagen_codigo": "POL-047", "stock": "Disponible",
-        "presentaciones": [
-          { "codigo": "POL-047", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 100000 }
-        ]
-      },
-      {
-        "id": "PROD-028", "categoria": "Tortas & Espectáculos Aéreos", "nombre": "Torta 42 Luces",
+        "id": "PROD-028", "categoria": "Tortas & Espectáculos Aéreos", "nombre": "Torta 49 Luces",
         "imagen_codigo": "POL-048", "stock": "Disponible",
         "presentaciones": [
-          { "codigo": "POL-048", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 142000 }
+          { "codigo": "POL-048", "presentacion": "Unidad", "costo_base": 80000, "precio_venta": 112000 }
         ]
       },
       {
         "id": "PROD-029", "categoria": "Tortas & Espectáculos Aéreos", "nombre": "Torta 100 Luces",
         "imagen_codigo": "POL-049", "stock": "Pocas unidades",
         "presentaciones": [
-          { "codigo": "POL-049", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 400000 }
-        ]
-      },
-      {
-        "id": "PROD-030", "categoria": "Tortas & Espectáculos Aéreos", "nombre": "Torta Revelación de Sexo",
-        "imagen_codigo": "POL-050", "stock": "Disponible",
-        "presentaciones": [
-          { "codigo": "POL-050", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 250000 }
+          { "codigo": "POL-049", "presentacion": "Unidad", "costo_base": 240000, "precio_venta": 336000 }
         ]
       },
       {
         "id": "PROD-031", "categoria": "Tortas & Espectáculos Aéreos", "nombre": "Torta 138 Luces",
         "imagen_codigo": "POL-056", "stock": "Nuevo 2026",
         "presentaciones": [
-          { "codigo": "POL-056", "presentacion": "Unidad", "costo_base": 0, "precio_venta": 420000 }
+          { "codigo": "POL-056", "presentacion": "Unidad", "costo_base": 250000, "precio_venta": 350000 }
         ]
       },
       // ═══════════════ NUEVOS 2026 ═══════════════
@@ -811,21 +971,21 @@
         "id": "PROD-032", "categoria": "Nuevos 2026", "nombre": "Estrobo",
         "imagen_codigo": "POL-053", "stock": "Nuevo 2026",
         "presentaciones": [
-          { "codigo": "POL-053", "presentacion": "Pack x5", "costo_base": 0, "precio_venta": 8500 }
+          { "codigo": "POL-053", "presentacion": "Pack x5", "costo_base": 5000, "precio_venta": 7000 }
         ]
       },
       {
         "id": "PROD-033", "categoria": "Nuevos 2026", "nombre": "Bengala Harry",
         "imagen_codigo": "POL-054", "stock": "Nuevo 2026",
         "presentaciones": [
-          { "codigo": "POL-054", "presentacion": "Pack x5", "costo_base": 0, "precio_venta": 17000 }
+          { "codigo": "POL-054", "presentacion": "Pack x5", "costo_base": 10000, "precio_venta": 14000 }
         ]
       },
       {
         "id": "PROD-034", "categoria": "Nuevos 2026", "nombre": "Supermetralleta",
         "imagen_codigo": "POL-055", "stock": "Nuevo 2026",
         "presentaciones": [
-          { "codigo": "POL-055", "presentacion": "Pack x200", "costo_base": 0, "precio_venta": 25000 }
+          { "codigo": "POL-055", "presentacion": "Unidad (200 tiros)", "costo_base": 15000, "precio_venta": 21000 }
         ]
       },
       // ═══════════════ COMBOS PROMOCIONALES 2026 ═══════════════
@@ -833,56 +993,56 @@
         "id": "PROD-035", "categoria": "Combos Promocionales 2026", "nombre": "Combo Familiar Inicial",
         "imagen_codigo": "COMBO-01", "stock": "Disponible",
         "presentaciones": [
-          { "codigo": "COMBO-01", "presentacion": "Pack surtido luces y volcanes", "costo_base": 0, "precio_venta": 50000 }
+          { "codigo": "COMBO-01", "presentacion": "Volcancitos x10 + Chispitas x6 + Traqui Hoja", "costo_base": 19000, "precio_venta": 24000 }
         ]
       },
       {
         "id": "PROD-036", "categoria": "Combos Promocionales 2026", "nombre": "Combo Infantil Seguro",
         "imagen_codigo": "COMBO-02", "stock": "Disponible",
         "presentaciones": [
-          { "codigo": "COMBO-02", "presentacion": "Chispitas, humos y rositas", "costo_base": 0, "precio_venta": 60000 }
+          { "codigo": "COMBO-02", "presentacion": "Chispitas x6 + Rositas x6 + Bengala Harry x5 + Volcancitos x10", "costo_base": 27300, "precio_venta": 36000 }
         ]
       },
       {
         "id": "PROD-037", "categoria": "Combos Promocionales 2026", "nombre": "Combo Luces & Color",
         "imagen_codigo": "COMBO-03", "stock": "Disponible",
         "presentaciones": [
-          { "codigo": "COMBO-03", "presentacion": "Varas, fuentes y bengalas", "costo_base": 0, "precio_venta": 96000 }
+          { "codigo": "COMBO-03", "presentacion": "Vara Soplona + Fuente Cuco Peq + Bengala Humo + Volcancitos x10 + Chispitas x6", "costo_base": 38584, "precio_venta": 50000 }
         ]
       },
       {
         "id": "PROD-038", "categoria": "Combos Promocionales 2026", "nombre": "Combo Estallido Barranquilla",
         "imagen_codigo": "COMBO-04", "stock": "Disponible",
         "presentaciones": [
-          { "codigo": "COMBO-04", "presentacion": "Golpes, martillos y metralletas", "costo_base": 0, "precio_venta": 106000 }
+          { "codigo": "COMBO-04", "presentacion": "1 Golpe x20 + 4 Golpes x30 + Martillo x10 + Metralleta x5 + Zeus x5", "costo_base": 28750, "precio_venta": 38000 }
         ]
       },
       {
         "id": "PROD-039", "categoria": "Combos Promocionales 2026", "nombre": "Combo Fiesta Soledad",
         "imagen_codigo": "COMBO-05", "stock": "Disponible",
         "presentaciones": [
-          { "codigo": "COMBO-05", "presentacion": "Tortas, volcanes y varas", "costo_base": 0, "precio_venta": 185000 }
+          { "codigo": "COMBO-05", "presentacion": "Torta 16L + Volcancitos x10 + Vara Soplona + Chispitas x6 + Rositas x6", "costo_base": 53967, "precio_venta": 70000 }
         ]
       },
       {
         "id": "PROD-040", "categoria": "Combos Promocionales 2026", "nombre": "Combo Celebración Premium",
         "imagen_codigo": "COMBO-06", "stock": "Disponible",
         "presentaciones": [
-          { "codigo": "COMBO-06", "presentacion": "Selección aérea y luces", "costo_base": 0, "precio_venta": 275000 }
+          { "codigo": "COMBO-06", "presentacion": "Torta 49L + Fuente Cuco Gde + Volcancitos x10 + Chispitas x12 + Bengala Humo", "costo_base": 110500, "precio_venta": 145000 }
         ]
       },
       {
         "id": "PROD-041", "categoria": "Combos Promocionales 2026", "nombre": "Combo Evento / Reunión",
         "imagen_codigo": "COMBO-07", "stock": "Disponible",
         "presentaciones": [
-          { "codigo": "COMBO-07", "presentacion": "Surtido alto rendimiento", "costo_base": 0, "precio_venta": 365000 }
+          { "codigo": "COMBO-07", "presentacion": "Torta 100L + Vara Soplona + Volcancitos x10 + Chispitas x12 + Bengala Humo + Rositas x6", "costo_base": 285467, "precio_venta": 370000 }
         ]
       },
       {
         "id": "PROD-042", "categoria": "Combos Promocionales 2026", "nombre": "Combo Gran Show Fin de Año",
         "imagen_codigo": "COMBO-08", "stock": "Disponible",
         "presentaciones": [
-          { "codigo": "COMBO-08", "presentacion": "Paquete completo gran formato", "costo_base": 0, "precio_venta": 590000 }
+          { "codigo": "COMBO-08", "presentacion": "Torta 138L + Torta 49L + Vara Soplona + Volcancitos x10 + Chispitas x12 + Bengala Humo + Estrobo x5", "costo_base": 410167, "precio_venta": 530000 }
         ]
       }
     ];
@@ -1071,7 +1231,7 @@
 
     function renderGrid() {
       const q = state.search.trim().toLowerCase();
-      const filtered = CATALOGO_AGRUPADO.filter(prod => {
+      let filtered = CATALOGO_AGRUPADO.filter(prod => {
         const matchCat = state.category === "Todos" || prod.categoria === state.category;
         const matchPres = prod.presentaciones.some(p =>
           p.codigo.toLowerCase().includes(q) || p.presentacion.toLowerCase().includes(q)
@@ -1083,9 +1243,37 @@
         return matchCat && matchQ;
       });
 
+      // Sorting
+      const sortVal = document.getElementById("sortSelect") ? document.getElementById("sortSelect").value : "default";
+      if (sortVal === "price-asc") {
+        filtered.sort((a, b) => (a.presentaciones[0]?.precio_venta || 0) - (b.presentaciones[0]?.precio_venta || 0));
+      } else if (sortVal === "price-desc") {
+        filtered.sort((a, b) => (b.presentaciones[0]?.precio_venta || 0) - (a.presentaciones[0]?.precio_venta || 0));
+      } else if (sortVal === "name-asc") {
+        filtered.sort((a, b) => a.nombre.localeCompare(b.nombre));
+      } else if (sortVal === "name-desc") {
+        filtered.sort((a, b) => b.nombre.localeCompare(a.nombre));
+      }
+
+      // Result counter
+      const countEl = document.getElementById("resultCount");
+      if (countEl) {
+        countEl.textContent = filtered.length === CATALOGO_AGRUPADO.length
+          ? `${filtered.length} productos`
+          : `Mostrando ${filtered.length} de ${CATALOGO_AGRUPADO.length} productos`;
+      }
+
       document.getElementById("statsText").textContent = "Pregunte por lo que no vea";
 
       const grid = document.getElementById("catalogGrid");
+      if (!filtered.length) {
+        grid.innerHTML = `<div class="empty-state">
+          <div class="empty-icon">🔍</div>
+          <div class="empty-text">No se encontraron productos</div>
+          <div class="empty-hint">Intenta con otro término o categoría</div>
+        </div>`;
+        return;
+      }
       grid.innerHTML = filtered.map(prod => {
         const active = getActivePresentation(prod);
         const qty = state.quantities[prod.id] || 1;
@@ -1109,10 +1297,10 @@
 
         return `
           <article class="card" id="card-${prod.id}">
-            <div class="img-wrap">
+            <div class="img-wrap" onclick="openLightbox('img/${imgCode}.jpg','${safeName}')">
               <span class="code-badge" id="badge-${prod.id}">${active.codigo}</span>
               <span class="stock-badge ${getStockBadgeClass(stockLabel)}">${stockLabel}</span>
-              <img src="img/${imgCode}.jpg" alt="${prod.nombre}"
+              <img src="img/${imgCode}.jpg" alt="${prod.nombre}" loading="lazy"
                    onerror="this.onerror=null; this.src=fallbackSvg('${imgCode}','${safeName}');" />
             </div>
             <div class="card-body">
@@ -1181,6 +1369,9 @@
       state.quantities[prodId] = 1;
       const el = document.getElementById("q-" + prodId);
       if (el) el.textContent = 1;
+      // Pulse animation
+      const card = document.getElementById("card-" + prodId);
+      if (card) { card.classList.add("addPulse"); setTimeout(() => card.classList.remove("addPulse"), 450); }
       updateCartBar();
     }
 
@@ -1208,6 +1399,14 @@
       document.getElementById("cartSummary").textContent = `${count} unidad(es)`;
       document.getElementById("cartTotal").textContent = fmtCOP(total);
       document.getElementById("modalTotal").textContent = fmtCOP(total);
+      // Cart badge
+      const badge = document.getElementById("cartBadge");
+      if (badge) {
+        badge.textContent = count > 0 ? count : "";
+        badge.style.display = count > 0 ? "inline-flex" : "none";
+      }
+      // localStorage persistence
+      try { localStorage.setItem("pb_cart", JSON.stringify(state.cart)); } catch(e) {}
       updateShippingUI();
     }
 
@@ -1543,6 +1742,58 @@
       }
     }
 
+    // ═══════════════ LIGHTBOX ═══════════════
+    function openLightbox(src, caption) {
+      const lb = document.getElementById("lightbox");
+      document.getElementById("lightboxImg").src = src;
+      document.getElementById("lightboxCaption").textContent = caption;
+      lb.style.display = "flex";
+    }
+    function closeLightbox() {
+      const lb = document.getElementById("lightbox");
+      lb.style.display = "none";
+      document.getElementById("lightboxImg").src = "";
+    }
+    document.getElementById("lightboxClose").addEventListener("click", closeLightbox);
+    document.getElementById("lightbox").addEventListener("click", (e) => {
+      if (e.target === document.getElementById("lightbox")) closeLightbox();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeLightbox();
+    });
+
+    // ═══════════════ SORT SELECT ═══════════════
+    const sortSel = document.getElementById("sortSelect");
+    if (sortSel) sortSel.addEventListener("change", () => renderGrid());
+
+    // ═══════════════ SCROLL TO TOP ═══════════════
+    const scrollBtn = document.getElementById("scrollTopBtn");
+    window.addEventListener("scroll", () => {
+      if (scrollBtn) scrollBtn.style.display = window.scrollY > 400 ? "flex" : "none";
+    });
+    if (scrollBtn) scrollBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // ═══════════════ CLICK OUTSIDE MODAL ═══════════════
+    document.getElementById("cartModal").addEventListener("click", (e) => {
+      if (e.target.classList.contains("modal-backdrop") || e.target.id === "cartModal") {
+        document.getElementById("cartModal").classList.remove("open");
+      }
+    });
+
+    // ═══════════════ LOCALSTORAGE RESTORE ═══════════════
+    try {
+      const saved = localStorage.getItem("pb_cart");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed && typeof parsed === "object") {
+          state.cart = parsed;
+        }
+      }
+    } catch(e) {}
+
+    // ═══════════════ INIT ═══════════════
     initCategories();
     syncChipActive();
     toggleCustomSellerField();
