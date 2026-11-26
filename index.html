@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Pirotecnia Barranquilla 2026 | v10.1 | 2026-11-25 | Fix imagen_codigo: 21 productos corregidos de POL-001 a su código real -->
+<!-- Pirotecnia Barranquilla 2026 | v10.2 | 2026-11-25 | Tema blanco + negro + dorado: fondo blanco, acentos dorados, header negro -->
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -7,17 +7,17 @@
   <title>Pirotecnia Barranquilla 2026 | Catálogo Oficial</title>
   <style>
     :root {
-      --bg: #0c0f14;
-      --panel: #151a22;
-      --panel-2: #1c232e;
-      --text: #f3f5f8;
-      --muted: #9aa5b4;
-      --accent: #ff5a1f;
-      --accent-2: #ffb703;
-      --border: #2a3342;
+      --bg: #ffffff;
+      --panel: #f8f8f8;
+      --panel-2: #f0f0f0;
+      --text: #1a1a1a;
+      --muted: #555555;
+      --accent: #c8a415;
+      --accent-2: #d4af37;
+      --border: #e0d9c8;
       --ok: #22c55e;
-      --warn: #f59e0b;
-      --danger: #ef4444;
+      --warn: #c8a415;
+      --danger: #c0392b;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -28,8 +28,8 @@
       padding-bottom: 98px;
     }
     header {
-      background: linear-gradient(135deg, #1a1210 0%, #121722 100%);
-      border-bottom: 1px solid var(--border);
+      background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+      border-bottom: 3px solid var(--accent-2);
       padding: 18px 20px;
       position: sticky;
       top: 0;
@@ -120,7 +120,7 @@
     }
     .img-wrap {
       aspect-ratio: 4 / 3;
-      background: #10141b;
+      background: #e8e0d0;
       position: relative;
       overflow: hidden;
     }
@@ -134,9 +134,9 @@
       position: absolute;
       top: 8px;
       left: 8px;
-      background: rgba(12, 15, 20, 0.88);
-      border: 1px solid var(--border);
-      color: var(--accent-2);
+      background: rgba(26, 26, 26, 0.85);
+      border: 1px solid var(--accent-2);
+      color: #d4af37;
       font-size: 0.74rem;
       font-weight: 700;
       padding: 2px 7px;
@@ -150,7 +150,7 @@
       font-weight: 700;
       padding: 2px 7px;
       border-radius: 6px;
-      background: rgba(12, 15, 20, 0.9);
+      background: rgba(26, 26, 26, 0.85);
       border: 1px solid var(--border);
     }
     .stock-ok { color: var(--ok); border-color: rgba(34, 197, 94, 0.4); }
@@ -175,7 +175,7 @@
     }
     .variant-box.selected {
       border-color: var(--accent-2);
-      background: #242d3d;
+      background: rgba(212, 175, 55, 0.12);
     }
     .variant-left { display: flex; align-items: center; gap: 8px; }
     .variant-box input[type="radio"] { accent-color: var(--accent); cursor: pointer; }
@@ -220,8 +220,8 @@
       cursor: pointer;
     }
     .add-btn:disabled {
-      background: #374151;
-      color: #9ca3af;
+      background: #d5d5d5;
+      color: #999999;
       cursor: not-allowed;
     }
     .cart-bar {
@@ -265,7 +265,7 @@
     }
     .modal-backdrop {
       position: fixed; inset: 0;
-      background: rgba(0,0,0,0.72);
+      background: rgba(0,0,0,0.55);
       display: none;
       align-items: center;
       justify-content: center;
@@ -298,7 +298,7 @@
       border-radius: 8px;
       background: rgba(255, 183, 3, 0.1);
       border: 1px solid rgba(255, 183, 3, 0.45);
-      color: #fde68a;
+      color: #92700c;
       font-size: 0.82rem;
       line-height: 1.45;
     }
@@ -1039,7 +1039,7 @@
     function fallbackSvg(code, name) {
       const safeCode = String(code || "").replace(/[<>&"]/g, "");
       const safeName = String(name || "").replace(/[<>&"]/g, "");
-      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600"><rect width="800" height="600" fill="#141923"/><rect x="24" y="24" width="752" height="552" rx="18" fill="none" stroke="#2c3648" stroke-width="3"/><text x="400" y="255" text-anchor="middle" fill="#ffb703" font-family="Arial,sans-serif" font-size="42" font-weight="bold">${safeCode}</text><text x="400" y="315" text-anchor="middle" fill="#e2e8f0" font-family="Arial,sans-serif" font-size="24">${safeName}</text><text x="400" y="360" text-anchor="middle" fill="#94a3b8" font-family="Arial,sans-serif" font-size="18">Pirotecnia Barranquilla 2026</text></svg>`;
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600"><rect width="800" height="600" fill="#e8e0d0"/><rect x="24" y="24" width="752" height="552" rx="18" fill="none" stroke="#d4af37" stroke-width="3"/><text x="400" y="255" text-anchor="middle" fill="#c8a415" font-family="Arial,sans-serif" font-size="42" font-weight="bold">${safeCode}</text><text x="400" y="315" text-anchor="middle" fill="#1a1a1a" font-family="Arial,sans-serif" font-size="24">${safeName}</text><text x="400" y="360" text-anchor="middle" fill="#555555" font-family="Arial,sans-serif" font-size="18">Pirotecnia Barranquilla 2026</text></svg>`;
       return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
     }
 
